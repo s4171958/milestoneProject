@@ -31,9 +31,9 @@ public class JDBCConnection {
      * @return
      *    Returns an ArrayList of Movie objects
      */
-    public ArrayList<Movie> getMovies() {
+    public ArrayList<countryAndRegion> getOrangeTableOne(String userAntigen, int userYear) {
         // Create the ArrayList to return - this time of Movie objects
-        ArrayList<Movie> movies = new ArrayList<>();
+        ArrayList<countryAndRegion> orangeTable = new ArrayList<>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -46,7 +46,21 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement()) {
                 statement.setQueryTimeout(30);
                 // The Query
-                String query = "SELECT * FROM movie";
+                String query = "SELECT DISTINCT\r\n" + //
+                                        "    antigen AS Antigen,\r\n" + //
+                                        "    year AS Year,\r\n" + //
+                                        "    country AS Country,\r\n" + //
+                                        "    region AS Region,\r\n" + //
+                                        "    coverage AS 'Percentage of Target'\r\n" + //
+                                        "FROM vaccination v\r\n" + //
+                                        "NATURAL JOIN \r\n" + //
+                                        "    Country c\r\n" + //
+                                        "WHERE \r\n" + //
+                                        "    Year = 2010\r\n" + //
+                                        "    AND LOWER(antigen) LIKE '%DTPCV1%'\r\n" + //
+                                        "    AND coverage >= 90\r\n" + //
+                                        "    AND coverage NOT LIKE ''\r\n" + //
+                                        "ORDER BY coverage desc;";
                 // Get Result
                 ResultSet results = statement.executeQuery(query);
                 // Process all of the results
@@ -54,19 +68,21 @@ public class JDBCConnection {
                 // We can iterate through all of the database query results
                 while (results.next()) {
                     // Create a Movie Object
-                    Movie movie = new Movie();
+                    countryAndRegion row = new countryAndRegion();
                     
                     // Lookup the columns we want, and set the movie object field
                     // BUT, we must be careful of the column type!
-                    movie.id    = results.getInt("mvnumb");
-                    movie.name  = results.getString("mvtitle");
-                    movie.year  = results.getInt("yrmde");
-                    movie.genre = results.getString("mvtype");
+                    row.antigen    = results.getString("Antigen");
+                    row.year  = results.getInt("Year");
+                    row.country  = results.getString("Country");
+                    row.region = results.getString("Region");
+                    row.percentage = results.getDouble("Percentage of Target");
                     
                     // Add the movie object to the array
-                    movies.add(movie);
+                    orangeTable.add(row);
                 }
                 // Close the statement because we are done with it
+                statement.close();
             }
         } catch (SQLException e) {
             // If there is an error, lets just pring the error
@@ -84,7 +100,7 @@ public class JDBCConnection {
         }
 
         // Finally we return all of the movies
-        return movies;
+        return orangeTable;
     }
 
     /**
@@ -93,61 +109,60 @@ public class JDBCConnection {
      * This has been implemented for you as an example.
      * HINT: you can use this to find all of the horror movies!
      */
-    public ArrayList<Movie> getMoviesByType(String movieType) {
-        ArrayList<Movie> movies = new ArrayList<>();
+    // public ArrayList<Movie> getMoviesByType(String movieType) {
+    //     ArrayList<Movie> movies = new ArrayList<>();
 
-        // Setup the variable for the JDBC connection
-        Connection connection = null;
+    //     // Setup the variable for the JDBC connection
+    //     Connection connection = null;
 
-        try {
-            // Connect to JDBC data base
-            connection = DriverManager.getConnection(DATABASE);
+    //     try {
+    //         // Connect to JDBC data base
+    //         connection = DriverManager.getConnection(DATABASE);
 
-            // Prepare a new SQL Query & Set a timeout
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);
+    //         // Prepare a new SQL Query & Set a timeout
+    //         Statement statement = connection.createStatement();
+    //         statement.setQueryTimeout(30);
 
-            // The Query
-            String query = "SELECT * FROM movie WHERE mvtype = '" + movieType + "'";
-            System.out.println(query);
+    //         // The Query
+    //         String query = "SELECT * FROM movie WHERE mvtype = '" + movieType + "'";
+    //         System.out.println(query);
             
-            // Get Result
-            ResultSet results = statement.executeQuery(query);
+    //         // Get Result
+    //         ResultSet results = statement.executeQuery(query);
 
-            // Process all of the results
-            while (results.next()) {
-                // Create a Movie Object
-                Movie movie = new Movie();
+    //         // Process all of the results
+    //         while (results.next()) {
+    //             // Create a Movie Object
+    //             Movie movie = new Movie();
 
-                movie.id    = results.getInt("mvnumb");
-                movie.name  = results.getString("mvtitle");
-                movie.year  = results.getInt("yrmde");
-                movie.genre = results.getString("mvtype");
+    //             movie.id    = results.getInt("mvnumb");
+    //             movie.name  = results.getString("mvtitle");
+    //             movie.year  = results.getInt("yrmde");
+    //             movie.genre = results.getString("mvtype");
 
-                movies.add(movie);
-            }
+    //             movies.add(movie);
+    //         }
 
-            // Close the statement because we are done with it
-            statement.close();
-        } catch (SQLException e) {
-            // If there is an error, lets just pring the error
-            System.err.println(e.getMessage());
-        } finally {
-            // Safety code to cleanup
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                // connection close failed.
-                System.err.println(e.getMessage());
-            }
-        }
+    //         // Close the statement because we are done with it
+    //         statement.close();
+    //     } catch (SQLException e) {
+    //         // If there is an error, lets just pring the error
+    //         System.err.println(e.getMessage());
+    //     } finally {
+    //         // Safety code to cleanup
+    //         try {
+    //             if (connection != null) {
+    //                 connection.close();
+    //             }
+    //         } catch (SQLException e) {
+    //             // connection close failed.
+    //             System.err.println(e.getMessage());
+    //         }
+    //     }
 
-        // Finally we return all of the movies
-        return movies;
-    }
+    //     // Finally we return all of the movies
+    //     return movies;
+    // }
 
     // TODO: Keep adding more methods here to answer all of the questions from the Studio Class activities
-    public static String 
 }
