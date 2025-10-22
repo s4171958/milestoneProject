@@ -132,6 +132,37 @@ public class JDBCConnection {
         return numCountries;
     }
 
+    public static int getNumOutbreaks() {
+        int numOutbreaks = 0;
+        Connection connection = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT SUM(cases) AS 'Total Number of Cases Last 5 Years' \r\n" + //
+                                "    FROM infectiondata\r\n" + //
+                                "    ORDER BY year DESC\r\n" + //
+                                "    LIMIT 5;";
+            ResultSet results = statement.executeQuery(query);
+
+            numOutbreaks = results.getInt("Total Number of Cases Last 5 Years");
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return numOutbreaks;
+    }
+
     
 
     /**
