@@ -56,8 +56,8 @@ public class JDBCConnection {
                                         "NATURAL JOIN \r\n" + //
                                         "    Country c\r\n" + //
                                         "WHERE \r\n" + //
-                                        "    Year = 2010\r\n" + //
-                                        "    AND LOWER(antigen) LIKE '%DTPCV1%'\r\n" + //
+                                        "    Year =" + userYear + "\r\n" + //
+                                        "    AND LOWER(antigen) LIKE '%" + userAntigen + "%'\r\n" + //
                                         "    AND coverage >= 90\r\n" + //
                                         "    AND coverage NOT LIKE ''\r\n" + //
                                         "ORDER BY coverage desc;";
@@ -102,6 +102,37 @@ public class JDBCConnection {
         // Finally we return all of the movies
         return orangeTable;
     }
+
+    public static int getNumCountries() {
+        int numCountries = 0;
+        Connection connection = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT COUNT(name) AS 'Number of Countries Registered'\r\n" + //
+                                "     FROM country c;";
+            ResultSet results = statement.executeQuery(query);
+
+            numCountries = results.getInt("Number of Countries Registered");
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return numCountries;
+    }
+
+    
 
     /**
      * Get all the movies in the database by a given type.
