@@ -163,6 +163,38 @@ public class JDBCConnection {
         return numOutbreaks;
     }
 
+    public static int getMostReportedDisease() {
+        int mostReportedDisease = 0;
+        Connection connection = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT inf_type AS 'Most Infectious Disease' \r\n" + //
+                                "    FROM infectiondata\r\n" + //
+                                "    WHERE year >= (SELECT MAX(year) - 4 FROM infectiondata)\r\n" + //
+                                "    GROUP BY inf_type\r\n" + //
+                                "    ORDER BY sum(cases) DESC\r\n" + //
+                                "    LIMIT 1;";
+            ResultSet results = statement.executeQuery(query);
+
+            mostReportedDisease = results.getInt("Most Infectious Disease");
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return mostReportedDisease;
+    }
     
 
     /**
