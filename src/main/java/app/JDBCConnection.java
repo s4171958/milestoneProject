@@ -195,6 +195,40 @@ public class JDBCConnection {
         }
         return mostReportedDisease;
     }
+
+    public static int getVaccinedCountries() {
+        int vaccinedCountries = 0;
+        Connection connection = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT COUNT(country)\r\n" + //
+                                "    FROM vaccination\r\n" + //
+                                "    WHERE \r\n" + //
+                                "        year = (SELECT MAX(year) FROM vaccination)\r\n" + //
+                                "        AND\r\n" + //
+                                "        coverage >= 100\r\n" + //
+                                "        and coverage NOT LIKE '';";
+            ResultSet results = statement.executeQuery(query);
+
+            vaccinedCountries = results.getInt("Most Infectious Disease");
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return vaccinedCountries;
+    }
     
 
     /**
