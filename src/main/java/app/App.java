@@ -32,10 +32,10 @@ public class App {
         // ADD ALL OF YOUR WEBPAGES HERE
         app.get(PageIndex.URL, new PageIndex());
         app.get(PageMoviesList.URL, new PageMoviesList());      
-        app.get(PageMoviesType.URL, new PageMoviesType());
+        app.get(OrangeLevel.URL, new OrangeLevel());
 
         // POST pages can accept form data
-        app.post(PageMoviesType.URL, new PageMoviesType());
+        app.post(OrangeLevel.URL, new OrangeLevel());
     }
 
 }

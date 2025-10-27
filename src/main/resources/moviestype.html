@@ -24,6 +24,11 @@
             <select id='movietype_drop' name='movietype_drop'>
                <!-- This is where the movies types are populated -->
                <option th:each="type : ${types}" th:text="${type}"></option>
+
+               <!-- <tr th:each="data : ${data_list}">
+                  <td>${data.region}</td>
+                  <td>${data.country}</td>
+               </tr> -->
             </select>
          </div>
          <div class='form-group'>

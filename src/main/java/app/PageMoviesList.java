@@ -40,7 +40,7 @@ public class PageMoviesList implements Handler {
         JDBCConnection jdbc = new JDBCConnection();
 
         // Next we will ask this *class* for the movies
-        ArrayList<Movie> movies = jdbc.getMovies();
+        ArrayList<countryAndRegion> movies = jdbc.getMovies();
         ArrayList<String> titles = new ArrayList<String>();
         for (Movie movie : movies) {
             titles.add(movie.name);
