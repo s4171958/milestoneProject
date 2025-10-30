@@ -18,7 +18,7 @@ public class JDBCConnection {
 
     // Name of database file (contained in database folder)
     private static final String DATABASE = "jdbc:sqlite:database/who.db";
-
+    private int test;
     /**
      * This creates a JDBC Object so we can keep talking to the database
      */
@@ -106,7 +106,7 @@ public class JDBCConnection {
     public static String getNumCountries() {
         String numCountries = null;
         Connection connection = null;
-
+        //int a = test;
         try {
             connection = DriverManager.getConnection(DATABASE);
             

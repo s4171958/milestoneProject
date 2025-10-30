@@ -29,6 +29,8 @@ public class PageIndex implements Handler {
         // In this example the model will remain empty
         Map<String, Object> model = new HashMap<>();
         
+       
+
         String numCountries = JDBCConnection.getNumCountries();
         model.put("numCountries", numCountries);
 
@@ -37,6 +39,9 @@ public class PageIndex implements Handler {
 
         String vaccinatedCountries = JDBCConnection.getVaccinedCountries();
         model.put("vaccinatedCountries",vaccinatedCountries);
+
+        String mostReportedDisease = JDBCConnection.getMostReportedDisease();
+        model.put("mostReportedDisease",mostReportedDisease);
 
         
         // DO NOT MODIFY THIS

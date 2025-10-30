@@ -16,13 +16,13 @@ import io.javalin.http.Handler;
  * @author Timothy Wiley, 2023. email: timothy.wiley@rmit.edu.au
  * @author Santha Sumanasekara, 2021. email: santha.sumanasekara@rmit.edu.au
  */
-public class OrangeLevel implements Handler {
+public class vaccinationRates implements Handler {
 
     // URL of this page relative to http://localhost:7001/
-    public static final String URL = "/OrangeLevel.html";
+    public static final String URL = "/VaccinationRates.html";
 
     // Name of the Thymeleaf HTML template page in the resources folder
-    private static final String TEMPLATE = ("OrangeLevel.html");
+    private static final String TEMPLATE = ("VaccinationRates.html");
 
     @Override
     public void handle(Context context) throws Exception {
