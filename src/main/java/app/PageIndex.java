@@ -28,7 +28,17 @@ public class PageIndex implements Handler {
         // The model of data to provide to Thymeleaf.
         // In this example the model will remain empty
         Map<String, Object> model = new HashMap<>();
-        model.put("test", "Hello");
+        
+        String numCountries = JDBCConnection.getNumCountries();
+        model.put("numCountries", numCountries);
+
+        String numOutbreaks = JDBCConnection.getNumOutbreaks();
+        model.put("numOutbreaks", numOutbreaks);
+
+        String vaccinatedCountries = JDBCConnection.getVaccinedCountries();
+        model.put("vaccinatedCountries",vaccinatedCountries);
+
+        
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
         context.render(TEMPLATE, model);

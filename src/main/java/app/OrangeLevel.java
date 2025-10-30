@@ -39,7 +39,7 @@ public class OrangeLevel implements Handler {
 
         // Add into the model the list of types to give to the dropdown
         ArrayList<String> antigenList = getAntigens();
-        types.add("HORROR");
+        model.add("HORROR");
         model.put("types", types);
 
         // Look up from JDBC

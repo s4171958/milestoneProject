@@ -30,8 +30,7 @@ public class App {
         // Note in this example we must add Movies Type as a GET and a POST!
         
         // ADD ALL OF YOUR WEBPAGES HERE
-        app.get(PageIndex.URL, new PageIndex());
-        app.get(PageMoviesList.URL, new PageMoviesList());      
+        app.get(PageIndex.URL, new PageIndex());   
         app.get(OrangeLevel.URL, new OrangeLevel());
 
         // POST pages can accept form data

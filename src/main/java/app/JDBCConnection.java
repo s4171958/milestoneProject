@@ -103,19 +103,21 @@ public class JDBCConnection {
         return orangeTable;
     }
 
-    public static int getNumCountries() {
-        int numCountries = 0;
+    public static String getNumCountries() {
+        String numCountries = null;
         Connection connection = null;
 
         try {
+            connection = DriverManager.getConnection(DATABASE);
+            
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
-            String query = "SELECT COUNT(name) AS 'Number of Countries Registered'\r\n" + //
+            String query = "SELECT COUNT(c.name) AS 'Number of Countries Registered'\r\n" + //
                                 "     FROM country c;";
             ResultSet results = statement.executeQuery(query);
 
-            numCountries = results.getInt("Number of Countries Registered");
+            numCountries = results.getString("Number of Countries Registered");
 
             statement.close();
         } catch (SQLException e) {
@@ -132,11 +134,13 @@ public class JDBCConnection {
         return numCountries;
     }
 
-    public static int getNumOutbreaks() {
-        int numOutbreaks = 0;
+    public static String getNumOutbreaks() {
+        String numOutbreaks = null;
         Connection connection = null;
 
         try {
+            connection = DriverManager.getConnection(DATABASE);
+
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
@@ -146,7 +150,7 @@ public class JDBCConnection {
                                 "    LIMIT 5;";
             ResultSet results = statement.executeQuery(query);
 
-            numOutbreaks = results.getInt("Total Number of Cases Last 5 Years");
+            numOutbreaks = results.getString("Total Number of Cases Last 5 Years");
 
             statement.close();
         } catch (SQLException e) {
@@ -163,11 +167,13 @@ public class JDBCConnection {
         return numOutbreaks;
     }
 
-    public static int getMostReportedDisease() {
-        int mostReportedDisease = 0;
+    public static String getMostReportedDisease() {
+        String mostReportedDisease = null;
         Connection connection = null;
 
         try {
+            connection = DriverManager.getConnection(DATABASE);
+
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
@@ -179,7 +185,7 @@ public class JDBCConnection {
                                 "    LIMIT 1;";
             ResultSet results = statement.executeQuery(query);
 
-            mostReportedDisease = results.getInt("Most Infectious Disease");
+            mostReportedDisease = results.getString("Most Infectious Disease");
 
             statement.close();
         } catch (SQLException e) {
@@ -196,11 +202,13 @@ public class JDBCConnection {
         return mostReportedDisease;
     }
 
-    public static int getVaccinedCountries() {
-        int vaccinedCountries = 0;
+    public static String getVaccinedCountries() {
+        String vaccinedCountries = null;
         Connection connection = null;
 
         try {
+            connection = DriverManager.getConnection(DATABASE);
+
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
@@ -213,7 +221,7 @@ public class JDBCConnection {
                                 "        and coverage NOT LIKE '';";
             ResultSet results = statement.executeQuery(query);
 
-            vaccinedCountries = results.getInt("Most Infectious Disease");
+            vaccinedCountries = results.getString("Most Infectious Disease");
 
             statement.close();
         } catch (SQLException e) {
@@ -229,68 +237,10 @@ public class JDBCConnection {
         }
         return vaccinedCountries;
     }
-    
 
-    /**
-     * Get all the movies in the database by a given type.
-     * Note this takes a string of the type as an argument!
-     * This has been implemented for you as an example.
-     * HINT: you can use this to find all of the horror movies!
-     */
-    // public ArrayList<Movie> getMoviesByType(String movieType) {
-    //     ArrayList<Movie> movies = new ArrayList<>();
-
-    //     // Setup the variable for the JDBC connection
-    //     Connection connection = null;
-
-    //     try {
-    //         // Connect to JDBC data base
-    //         connection = DriverManager.getConnection(DATABASE);
-
-    //         // Prepare a new SQL Query & Set a timeout
-    //         Statement statement = connection.createStatement();
-    //         statement.setQueryTimeout(30);
-
-    //         // The Query
-    //         String query = "SELECT * FROM movie WHERE mvtype = '" + movieType + "'";
-    //         System.out.println(query);
-            
-    //         // Get Result
-    //         ResultSet results = statement.executeQuery(query);
-
-    //         // Process all of the results
-    //         while (results.next()) {
-    //             // Create a Movie Object
-    //             Movie movie = new Movie();
-
-    //             movie.id    = results.getInt("mvnumb");
-    //             movie.name  = results.getString("mvtitle");
-    //             movie.year  = results.getInt("yrmde");
-    //             movie.genre = results.getString("mvtype");
-
-    //             movies.add(movie);
-    //         }
-
-    //         // Close the statement because we are done with it
-    //         statement.close();
-    //     } catch (SQLException e) {
-    //         // If there is an error, lets just pring the error
-    //         System.err.println(e.getMessage());
-    //     } finally {
-    //         // Safety code to cleanup
-    //         try {
-    //             if (connection != null) {
-    //                 connection.close();
-    //             }
-    //         } catch (SQLException e) {
-    //             // connection close failed.
-    //             System.err.println(e.getMessage());
-    //         }
-    //     }
-
-    //     // Finally we return all of the movies
-    //     return movies;
-    // }
-
-    // TODO: Keep adding more methods here to answer all of the questions from the Studio Class activities
 }
+    
+  
+      
+
+    
