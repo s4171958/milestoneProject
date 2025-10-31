@@ -21,7 +21,7 @@ public class vaccinationRates implements Handler {
     // URL of this page relative to http://localhost:7001/
     public static final String URL = "/VaccinationRates.html";
 
-    // Name of the Thymeleaf HTML template page in the resources folder
+    // Thymeleaf HTML template page in the resources folder
     private static final String TEMPLATE = ("VaccinationRates.html");
 
     @Override
