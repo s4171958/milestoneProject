@@ -18,7 +18,7 @@ public class JDBCConnection {
 
     // Name of database file (contained in database folder)
     private static final String DATABASE = "jdbc:sqlite:database/who.db";
-    private int test;
+    
     /**
      * This creates a JDBC Object so we can keep talking to the database
      */
@@ -26,11 +26,6 @@ public class JDBCConnection {
         System.out.println("Created JDBC Connection Object");
     }
 
-    /**
-     * Get all of the Movies in the database.
-     * @return
-     *    Returns an ArrayList of Movie objects
-     */
     public ArrayList<countryAndRegion> getOrangeTableOne(String userAntigen, int userYear) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<countryAndRegion> orangeTable = new ArrayList<>();
