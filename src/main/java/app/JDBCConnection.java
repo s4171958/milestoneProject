@@ -19,6 +19,7 @@ public class JDBCConnection {
     // Name of database file (contained in database folder)
     private static final String DATABASE = "jdbc:sqlite:database/who.db";
     
+    
     /**
      * This creates a JDBC Object so we can keep talking to the database
      */
@@ -27,6 +28,12 @@ public class JDBCConnection {
     }
 
     public ArrayList<countryAndRegion> getOrangeTableOne(String userAntigen, int userYear) {
+    /**
+     * Get all of the Movies in the database.
+     * @return
+     *    Returns an ArrayList of Movie objects
+     */
+    public static ArrayList<countryAndRegion> getOrangeTableOne(String userAntigen, int userYear) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<countryAndRegion> orangeTable = new ArrayList<>();
 
@@ -172,7 +179,7 @@ public class JDBCConnection {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
-            String query = "SELECT inf_type AS 'Most Infectious Disease' \r\n" + //
+            String query = "SELECT inf_type \r\n" + //
                                 "    FROM infectiondata\r\n" + //
                                 "    WHERE year >= (SELECT MAX(year) - 4 FROM infectiondata)\r\n" + //
                                 "    GROUP BY inf_type\r\n" + //
@@ -180,7 +187,7 @@ public class JDBCConnection {
                                 "    LIMIT 1;";
             ResultSet results = statement.executeQuery(query);
 
-            mostReportedDisease = results.getString("Most Infectious Disease");
+            mostReportedDisease = results.getString("inf_type");
 
             statement.close();
         } catch (SQLException e) {
@@ -216,7 +223,7 @@ public class JDBCConnection {
                                 "        and coverage NOT LIKE '';";
             ResultSet results = statement.executeQuery(query);
 
-            vaccinedCountries = results.getString("Most Infectious Disease");
+            vaccinedCountries = results.getString("COUNT(country)");
 
             statement.close();
         } catch (SQLException e) {

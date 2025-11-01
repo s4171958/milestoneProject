@@ -16,13 +16,13 @@ import io.javalin.http.Handler;
  * @author Timothy Wiley, 2023. email: timothy.wiley@rmit.edu.au
  * @author Santha Sumanasekara, 2021. email: santha.sumanasekara@rmit.edu.au
  */
-public class vaccinationRates implements Handler {
+public class vaccRates implements Handler {
 
     // URL of this page relative to http://localhost:7001/
-    public static final String URL = "/VaccinationRates.html";
+    public static final String URL = "/vaccRates.html";
 
     // Name of the Thymeleaf HTML template page in the resources folder
-    private static final String TEMPLATE = ("VaccinationRates.html");
+    private static final String TEMPLATE = ("vaccRates.html");
 
     @Override
     public void handle(Context context) throws Exception {
@@ -32,27 +32,14 @@ public class vaccinationRates implements Handler {
         //  - Array list of all movies for the UL element
         Map<String, Object> model = new HashMap<>();
 
-       
-
-        // Add in title for the h1 tag to the model
-        model.put("title", new String("Countries with 90% of Vaccination Target"));
-
         // Add into the model the list of types to give to the dropdown
-        ArrayList<String> antigenList = getAntigens();
-        model.add("HORROR");
+        ArrayList<String> types = new ArrayList<>();
+        types.add("HORROR");
         model.put("types", types);
 
         // Look up from JDBC
         JDBCConnection jdbc = new JDBCConnection();
 
-         // SAMPLE
-        String antigen;
-        int year; // = Integer.parseInt(yearData);
-        ArrayList<countryAndRegion> list = jdbc.getOrangeTableOne(antigen, year);
-
-        // add to model
-        model.put("data_list", list);
-        
         /* Get the Form Data
          *  from the drop down list
          * Need to be Careful!!
@@ -83,7 +70,7 @@ public class vaccinationRates implements Handler {
         } else {
             // If NOT NULL, then lookup the movie by type!
             model.put("title_text", new String(movietype_textbox + " Movies"));
-            ArrayList<Movie> movies = jdbc.getOrangeTableOne(movietype_textbox);
+            ArrayList<Movie> movies = jdbc.getMoviesByType(movietype_textbox);
             ArrayList<String> titles = extractMovieTitles(movies);
             model.put("movies_text", titles);
         }
