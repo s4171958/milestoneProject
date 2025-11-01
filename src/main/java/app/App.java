@@ -31,10 +31,10 @@ public class App {
         
         // ADD ALL OF YOUR WEBPAGES HERE
         app.get(PageIndex.URL, new PageIndex());   
-        app.get(vaccinationRates.URL, new vaccinationRates());
+        
 
         // POST pages can accept form data
-        app.post(vaccinationRates.URL, new vaccinationRates());
+       
     }
 
 }

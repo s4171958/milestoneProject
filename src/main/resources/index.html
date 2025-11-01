@@ -9,27 +9,38 @@
 <body>
    <div class='topnav'>
       <a href='/'>Homepage</a>
-      <a href='movies.html'>List All Movies</a>
-      <a href='moviestype.html'>Get Movies by Type</a>
+      <a href='/'>About</a>
+      <a href='/'>Vac Rates</a>
+      <a href='/'>Infection Data</a>
+      <a href='/'>Growth Rate</a>
+      <a href='/'>Average Infection Rate</a>
    </div>
    
    <div class='header' id="${test}">
       <h1>
          <img src='logo.png' class='top-image' alt='RMIT logo' height='75'>
-         Homepage
+         WHO Database
       </h1>
    </div>
    
    <div class='content'>
-      <p>Links to queries on different web pages</p>
-      <ul>
-         <li>
-            <a href='movies.html'>List all Movies</a>
-         </li>
-         <li>
-            <a href='moviestype.html'>Get Movies by Type</a>
-         </li>
-      </ul>
+      <h2> No Of Countries in Database</h2>
+      <p2 th:text="${numCountries}"></p2>
+   </div>
+
+   <div class='content'>
+      <h2> No of Outbreaks in the Last 5 Years</h2>
+      <p2 th:text="${numOutbreaks}"></p2>
+   </div>
+
+   <div class='content'>
+      <h2> No of Vaccinated Countries</h2>
+      <p2 th:text="${vaccinatedCountries}"></p2>
+   </div>
+
+   <div class='content'>
+      <h2> Most Infectious Disease</h2>
+      <p2 th:text="${mostReportedDisease}"></p2>
    </div>
    
    <div class='footer'>
