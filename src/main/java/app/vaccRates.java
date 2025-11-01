@@ -33,20 +33,19 @@ public class vaccRates implements Handler {
         Map<String, Object> model = new HashMap<>();
 
         // Add into the model the list of types to give to the dropdown
-        ArrayList<String> types = new ArrayList<>();
-        types.add("HORROR");
-        model.put("types", types);
+        ArrayList<String> types = JDBCConnection.getAntigen();
+        
+        model.put("antigenTypes", types);
 
-        // Look up from JDBC
-        JDBCConnection jdbc = new JDBCConnection();
+       
 
         /* Get the Form Data
          *  from the drop down list
          * Need to be Careful!!
          *  If the form is not filled in, then the form will return null!
         */
-        String movietype_drop = context.formParam("movietype_drop");
-        if (movietype_drop == null) {
+        String antigentype_drop = context.formParam("antigentype_drop");
+        if (antigentype_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
             model.put("title_drop", new String("No Results to show for dropbox"));
@@ -54,9 +53,9 @@ public class vaccRates implements Handler {
             model.put("movies_drop", movies);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(movietype_drop + " Movies"));
-            ArrayList<Movie> movies = jdbc.getMoviesByType(movietype_drop);
-            ArrayList<String> titles = extractMovieTitles(movies);
+            model.put("title_drop", new String(antigentype_drop + " Movies"));
+            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(antigentype_drop, 2024);
+            ArrayList<String> titles = extractCountry(orangeTableOne);
             model.put("movies_drop", titles);
         }
 
@@ -70,8 +69,8 @@ public class vaccRates implements Handler {
         } else {
             // If NOT NULL, then lookup the movie by type!
             model.put("title_text", new String(movietype_textbox + " Movies"));
-            ArrayList<Movie> movies = jdbc.getMoviesByType(movietype_textbox);
-            ArrayList<String> titles = extractMovieTitles(movies);
+            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(movietype_textbox, 2024);
+            ArrayList<String> titles = extractCountry(orangeTableOne);
             model.put("movies_text", titles);
         }
 
@@ -85,12 +84,12 @@ public class vaccRates implements Handler {
      * array list of movies. This is needed to pass an arraylist of
      * strings to Thymeleaf as we can't use our own custom classes.
      */
-    ArrayList<String> extractMovieTitles(ArrayList<Movie> movies) {
-        ArrayList<String> titles = new ArrayList<>();
-        for (Movie movie : movies) {
-            titles.add(movie.name);
+    ArrayList<String> extractCountry(ArrayList<countryAndRegion> orangeTableOne) {
+        ArrayList<String> country = new ArrayList<>();
+        for (countryAndRegion row : orangeTableOne) {
+            country.add(row.country);
         }
-        return titles;
+        return country;
     }
 
 }

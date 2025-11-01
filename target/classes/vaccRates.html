@@ -23,10 +23,10 @@
    <div class='content'>
       <form action='/vaccRates.html' method='post'>
          <div class='form-group'>
-            <label for='movietype_drop'>Select the type Movie Type (Dropdown):</label>
-            <select id='movietype_drop' name='movietype_drop'>
+            <label for='antigentype_drop'>Select the type Antigen Type (Dropdown):</label>
+            <select id='antigentype_drop' name='antigentype_drop'>
                <!-- This is where the movies types are populated -->
-               <option th:each="type : ${types}" th:text="${type}"></option>
+               <option th:each="antigenType : ${antigenTypes}" th:text="${antigenType}"></option>
             </select>
          </div>
          <div class='form-group'>
