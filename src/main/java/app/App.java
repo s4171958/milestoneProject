@@ -3,6 +3,7 @@ package app;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 
+
 public class App {
 
     public static final int         JAVALIN_PORT    = 7001;
@@ -32,6 +33,7 @@ public class App {
         // ADD ALL OF YOUR WEBPAGES HERE
         app.get(PageIndex.URL, new PageIndex());   
         app.get(vaccRates.URL, new vaccRates());
+        app.get(GreenBPage.URL, new GreenBPage());
 
         // POST pages can accept form data
         app.post(vaccRates.URL, new vaccRates());

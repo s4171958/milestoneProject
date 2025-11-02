@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title>All Movie</title>
+
+   <link rel="stylesheet" type="text/css" href="common.css" />
+</head>
+<body>
+     <div class='topnav'>
+      <a href='/'>Homepage</a>
+      <a href='infectiondata.html'>About Us</a>
+      <a href='vaccRates.html'>Vac Rates</a>
+      <a href='/'>Infection Data</a>
+      <a href='/'>Growth Rate</a>
+      <a href='/'>Average Infection Rate</a>
+   </div>
+   
+   <div class='header'>
+      <h1 th:text="${title}"></h1>
+   </div>
+
+   <div style="border: 2px solid black; padding: 10px; width: 1000px; 
+            margin: 50px auto 0 auto; text-align: center;">
+  <p></p>Our Mission: <p></p>
+  <p></p>At WHO Database, our mission is to provide statistics about vaccines and infections, 
+  in a very clear and concise manner. We aim to provide an alternative to cluttered and hard-to-read datasets,
+  so anyone can have easy access to helpful and insightful information. <p></p>
+</div>
+
+ <div style="border: 2px solid black; padding: 10px; width: 1000px; 
+            margin: 50px auto 0 auto; text-align: center;">
+  <p></p>How To Use Our Website? <p></p>
+  <p></p> At the top of our website, you can see four buttons, apart from homepage and About Us.
+These buttons will lead you to pages, where you can access our datasets. The first two buttons will lead you to pages where you can view our data broadly.
+The second two will allow you to have a deeper analysis of our data.  <p></p>
+<p></p> Each page will have a series of drop-down menus, that will allow you to select the data you want to see, as well as how you want that data ordered on some pages.
+Then just push a button to present, and there you go, all the data you want to see will be shown on a neat table. <p></p>
+<p></p> As simple as that! <p></p>
+</div>
+
+<div class='style'>
+      <h1>
+         <img src='persona1.jpg' class='top-image' alt='Persona 1' height='430', style = "margin-left: 243px;">
+         <img src='persona2.jpg' class='top-image' alt='Persona 1' height='430', style = "margin-left: 136px">
+      </h1>
+      
+   </div>
+
+   <div style="display: inline-block; border: 2px solid black; padding: 10px; width: 435px; 
+            margin: 30px 0 0 242px; text-align: center;">
+  <p></p>Our Mission: <p></p>
+</div>
+   
+  <div style="display: inline-block; border: 2px solid black; padding: 10px; width: 421px; 
+            margin: 30px 0 0 140px; text-align: center;">
+  <p></p>Our Min: <p></p>
+</div>
+   
+
+
+
+</body>
+</html>

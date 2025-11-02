@@ -286,6 +286,70 @@ public class JDBCConnection {
         return vaccinedCountries;
     }
  //TODO: add second table data for orange level code
+
+
+    public ArrayList<Personasdata> getPersonasdata() {
+        // Create the ArrayList to return - this time of Movie objects
+        ArrayList<Personasdata> personas = new ArrayList<Personasdata>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT * FROM Personas";
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            // The "results" variable is similar to an array
+            // We can iterate through all of the database query results
+            while (results.next()) {
+                // Create a Movie Object
+                Personasdata persona = new Personasdata();
+
+                // Lookup the columns we want, and set the movie object field
+                // BUT, we must be careful of the column type!
+                persona.name    = results.getString("PersonaName");
+                persona.occupation  = results.getString("Occupation");
+                persona.gender  = results.getString("Gender");
+                persona.age = results.getInt("Age");
+                persona.location = results.getString("Location");
+                persona.bio = results.getString("Bio");
+                persona.needs = results.getString("Needs");
+                persona.goals = results.getString("Goals");
+                // Add the movie object to the array
+                personas.add(persona);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return personas;
+    }
 }
     
   
