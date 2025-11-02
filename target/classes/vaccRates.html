@@ -40,11 +40,29 @@
       </form>
 
       <!-- Display movies. Use check of the size of the array list to optionally show the UL -->
-      <div th:if="${#lists.size(movies_drop) > 0}"> 
-         <h2 th:text="${title_drop}"></h2>
-         <ul>
-            <li th:each="movie : ${movies_drop}" th:text="${movie}"></li>
-         </ul>
+      <div th:if="${antigen_drop != null}"> 
+          <h2 th:text="${title_drop}"></h2>
+        <table border="1">
+        <thead>
+            <tr>
+                <th>Antigen</th>
+                <th>Year</th>
+                <th>Country</th>
+                <th>Region</th>
+                <th>Percentage of Goal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="row : ${antigen_drop}">
+                
+                <td th:text="${row.antigen}"></td>
+                <td th:text="${row.year}"></td>
+                <td th:text="${row.country}"></td>
+                <td th:text="${row.region}"></td>
+                <td th:text="${row.percentage}"></td>
+            </tr>
+        </tbody>
+    </table>
       </div>
 
       <!-- Display movies. Use check of the size of the array list to optionally show the UL -->
