@@ -22,27 +22,29 @@
          WHO Database
       </h1>
    </div>
-   
-   <div class='content'>
-      <h2> No Of Countries in Database</h2>
-      <p2 th:text="${numCountries}"></p2>
+   <div class = 'dashboard'>
+      <div class='fact_card'>
+         <h2> No Of Countries in Database</h2>
+         <p2 th:text="${numCountries}"></p2>
+      </div>
+
+      <div class='fact_card'>
+         <h2> No of Outbreaks in the Last 5 Years</h2>
+         <p2 th:text="${numOutbreaks}"></p2>
+      </div>
+
+      <div class='fact_card'>
+         <h2> No of Vaccinated Countries</h2>
+         <p2 th:text="${vaccinatedCountries}"></p2>
+      </div>
+
+      <div class='fact_card'>
+         <h2> Most Infectious Disease</h2>
+         <p2 th:text="${mostReportedDisease}"></p2>
+      </div>
    </div>
 
-   <div class='content'>
-      <h2> No of Outbreaks in the Last 5 Years</h2>
-      <p2 th:text="${numOutbreaks}"></p2>
-   </div>
 
-   <div class='content'>
-      <h2> No of Vaccinated Countries</h2>
-      <p2 th:text="${vaccinatedCountries}"></p2>
-   </div>
-
-   <div class='content'>
-      <h2> Most Infectious Disease</h2>
-      <p2 th:text="${mostReportedDisease}"></p2>
-   </div>
-   
    <div class='footer'>
       <p></p>
    </div>
