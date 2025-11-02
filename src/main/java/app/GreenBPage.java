@@ -11,7 +11,7 @@ import io.javalin.http.Handler;
 public class GreenBPage implements Handler {
 
     
-    public static final String URL = "/infectiondata.html";
+    public static final String URL = "/aboutus.html";
 
     
     private static final String TEMPLATE = ("GreenBPage.html");
@@ -22,7 +22,7 @@ public class GreenBPage implements Handler {
         Map<String, Object> model = new HashMap<String, Object>();
 
         
-        model.put("title", new String("About Us"));
+        
 
        
         JDBCConnection jdbc = new JDBCConnection();

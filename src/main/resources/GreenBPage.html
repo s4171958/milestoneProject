@@ -2,22 +2,25 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-   <title>All Movie</title>
+   <title>WHO Database</title>
 
    <link rel="stylesheet" type="text/css" href="common.css" />
 </head>
 <body>
      <div class='topnav'>
       <a href='/'>Homepage</a>
-      <a href='infectiondata.html'>About Us</a>
+      <a href='aboutus.html'>About Us</a>
       <a href='vaccRates.html'>Vac Rates</a>
-      <a href='/'>Infection Data</a>
+      <a href='infectiondata.html'>Infection Data</a>
       <a href='/'>Growth Rates</a>
       <a href='/'>Average Infection Rates</a>
    </div>
    
-   <div class='header'>
-      <h1 th:text="${title}"></h1>
+ <div class='header' id="${test}">
+      <h1>
+         <img src='WHO_database_logo.png' class='top-image' alt='RMIT logo' height='75'>
+         About Us
+      </h1>
    </div>
 
    <div style="border: 2px solid black; padding: 10px; width: 1000px; 

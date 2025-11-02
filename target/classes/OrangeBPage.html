@@ -2,12 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-   <title>WHO Database - Homepage</title>
+   <title>WHO Database</title>
 
    <link rel="stylesheet" type="text/css" href="common.css" />
 </head>
 <body>
-   <div class='topnav'>
+     <div class='topnav'>
       <a href='/'>Homepage</a>
       <a href='aboutus.html'>About Us</a>
       <a href='vaccRates.html'>Vac Rates</a>
@@ -19,32 +19,20 @@
    <div class='header' id="${test}">
       <h1>
          <img src='WHO_database_logo.png' class='top-image' alt='RMIT logo' height='75'>
-         WHO Database
+         Infection Data
       </h1>
    </div>
-   
-   <div class='content'>
-      <h2> No Of Countries in Database</h2>
-      <p2 th:text="${numCountries}"></p2>
-   </div>
 
-   <div class='content'>
-      <h2> No of Outbreaks in the Last 5 Years</h2>
-      <p2 th:text="${numOutbreaks}"></p2>
-   </div>
 
-   <div class='content'>
-      <h2> No of Vaccinated Countries</h2>
-      <p2 th:text="${vaccinatedCountries}"></p2>
-   </div>
+   <div class = 'common' style="text-align: center; font-size: 20px;">
+  <p></p>View the number of cases for different infections, based on economic status <p></p>
 
-   <div class='content'>
-      <h2> Most Infectious Disease</h2>
-      <p2 th:text="${mostReportedDisease}"></p2>
-   </div>
-   
-   <div class='footer'>
-      <p></p>
-   </div>
+</div>
+
+ 
+
+
+
+
 </body>
 </html>

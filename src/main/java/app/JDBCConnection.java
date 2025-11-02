@@ -401,8 +401,7 @@ public class JDBCConnection {
        
         return students;
     }
-    /* TODO: Add a method to collect data for infections. Then generate drop-down menus and tables
-     for Orange-B Page. */ 
+    // TODO: Add a method to collect data for infections.
 }
     
   
