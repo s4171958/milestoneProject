@@ -91,5 +91,4 @@ public class vaccRates implements Handler {
         }
         return country;
     }
-
 }
