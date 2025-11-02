@@ -285,7 +285,7 @@ public class JDBCConnection {
         }
         return vaccinedCountries;
     }
-
+ //TODO: add second table data for orange level code
 }
     
   
