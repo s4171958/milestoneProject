@@ -5,7 +5,7 @@ public class countryAndRegion {
    public String antigen;
 
    // Year Column
-   public int year;
+   public String year;
 
    // Country Column
    public String country;
@@ -14,7 +14,7 @@ public class countryAndRegion {
    public String region;
 
    // Vaccination coverage column
-   public double percentage;
+   public String percentage;
 
    /**
     * Create a movie withou setting any of the fields,
@@ -26,7 +26,7 @@ public class countryAndRegion {
    /**
     * Create a movie setting all of the fields
     */
-   public countryAndRegion(String antigen, int year, String country, double percentage, String region) {
+   public countryAndRegion(String antigen, String year, String country, String percentage, String region) {
       this.antigen = antigen;
       this.year = year;
       this.country = country;

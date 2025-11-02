@@ -41,11 +41,13 @@ public class vaccRates implements Handler {
             model.put("movies_drop", movies);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(antigentype_drop + " Movies"));
+            model.put("title_drop", new String(antigentype_drop + " Statistics"));
             ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(antigentype_drop, 2024);
-            ArrayList<String> titles = extractCountry(orangeTableOne);
-            model.put("movies_drop", titles);
+           
+            model.put("antigen_drop", orangeTableOne);
         }
+
+        
         //TODO: change conditional statement to accept only numbers (years that database has data in)
         String movietype_textbox = context.formParam("movietype_textbox");
         if (movietype_textbox == null || movietype_textbox == "") {
@@ -74,5 +76,21 @@ public class vaccRates implements Handler {
             country.add(row.country);
         }
         return country;
+    }
+
+    ArrayList<String> extractRegion(ArrayList<countryAndRegion> orangeTableOne) {
+        ArrayList<String> region = new ArrayList<>();
+        for (countryAndRegion row : orangeTableOne) {
+            region.add(row.region);
+        }
+        return region;
+    }
+
+    ArrayList<String> extractCoverage(ArrayList<countryAndRegion> orangeTableOne) {
+        ArrayList<String> coverage = new ArrayList<>();
+        for (countryAndRegion row : orangeTableOne) {
+            coverage.add(row.percentage);
+        }
+        return coverage;
     }
 }

@@ -70,10 +70,10 @@ public class JDBCConnection {
                     // Lookup the columns we want, and set the movie object field
                     // BUT, we must be careful of the column type!
                     row.antigen    = results.getString("Antigen");
-                    row.year  = results.getInt("Year");
+                    row.year  = results.getString("Year");
                     row.country  = results.getString("Country");
                     row.region = results.getString("Region");
-                    row.percentage = results.getDouble("Percentage of Target");
+                    row.percentage = results.getString("Percentage of Target");
                     
                     // Add the movie object to the array
                     orangeTable.add(row);
