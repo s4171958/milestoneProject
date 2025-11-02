@@ -47,16 +47,44 @@ Then just push a button to present, and there you go, all the data you want to s
       
    </div>
 
-   <div style="display: inline-block; border: 2px solid black; padding: 10px; width: 435px; 
-            margin: 30px 0 0 242px; text-align: center;">
-  <p></p>Our Mission: <p></p>
-</div>
+<div style="display: flex;">
+    
+    <div style="border: 2px solid black; padding: 10px; width: 435px; height: 500px; text-align:center; margin-top: 0px; margin-left: 242px;">
+       <p th:text="${pname1}"></p>
+      <p th:text="${occupation1}"></p>
+      <p th:text="|${gender1}, Age ${age1}, Lives in ${location1}|"></p>
+      <p th:text="|Bio: ${bio1}|"></p>
+      <p th:text="|Needs: ${needs1}|"></p>
+      <p th:text="|Goals: ${goals1}|"></p>
+    </div>
+
    
-  <div style="display: inline-block; border: 2px solid black; padding: 10px; width: 421px; 
-            margin: 30px 0 0 140px; text-align: center;">
-  <p></p>Our Min: <p></p>
+  <div style="border: 2px solid black; padding: -1px 10px 10px 10px; width: 421px; height: 500px; text-align:center; margin-left:145px;">
+    <p th:text="${pname2}"></p>
+    <p th:text="${occupation2}"></p>
+    <p th:text="|${gender2}, Age ${age2}, Lives in ${location2}|"></p>
+      <p th:text="|Bio: ${bio2}|"></p>
+   <p th:text="|Needs: ${needs2}|"></p>
+      <p th:text="|Goals: ${goals2}|"></p>
+    </div>
 </div>
+
+<div style="display: flex;">
+    
+    <div style="border: 2px solid black; padding: -1px 10px 10px 10px; width: 435px; height: 120px; text-align:center; margin-top: 20px; margin-left: 242px;">
+       <p> Website Developers:<p>
+      <p th:text="${sname1}"></p>
+      <p th:text="${id1}"></p>
+    </div>
+
    
+  <div style="border: 2px solid black; padding: -1px 10px 10px 10px; width: 421px; height: 120px; text-align:center; margin-left:145px; margin-top: 20px;">
+     <p> Website Developers:<p>
+      <p th:text="${sname2}"></p>
+      <p th:text="${id2}"></p>
+</div>
+</div>>
+
 
 
 
