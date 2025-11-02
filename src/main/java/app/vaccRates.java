@@ -7,15 +7,7 @@ import java.util.Map;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
-/**
- * Example Index HTML class using Javalin
- * <p>
- * Generate a static HTML page using Javalin
- * by writing the raw HTML into a Java String object
- *
- * @author Timothy Wiley, 2023. email: timothy.wiley@rmit.edu.au
- * @author Santha Sumanasekara, 2021. email: santha.sumanasekara@rmit.edu.au
- */
+//TODO: Finish CSS
 public class vaccRates implements Handler {
 
     // URL of this page relative to http://localhost:7001/
@@ -39,11 +31,7 @@ public class vaccRates implements Handler {
 
        
 
-        /* Get the Form Data
-         *  from the drop down list
-         * Need to be Careful!!
-         *  If the form is not filled in, then the form will return null!
-        */
+       //TODO: nest if/else statement so that both boxes need to be filled before database is called
         String antigentype_drop = context.formParam("antigentype_drop");
         if (antigentype_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -58,7 +46,7 @@ public class vaccRates implements Handler {
             ArrayList<String> titles = extractCountry(orangeTableOne);
             model.put("movies_drop", titles);
         }
-
+        //TODO: change conditional statement to accept only numbers (years that database has data in)
         String movietype_textbox = context.formParam("movietype_textbox");
         if (movietype_textbox == null || movietype_textbox == "") {
             // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -79,11 +67,7 @@ public class vaccRates implements Handler {
         context.render(TEMPLATE, model);
     }
 
-    /**
-     * This extracts the ArrayList of Movie Titles from the provided
-     * array list of movies. This is needed to pass an arraylist of
-     * strings to Thymeleaf as we can't use our own custom classes.
-     */
+    //TODO: add other extract methods for other columns, create a table in html and populate with the following data
     ArrayList<String> extractCountry(ArrayList<countryAndRegion> orangeTableOne) {
         ArrayList<String> country = new ArrayList<>();
         for (countryAndRegion row : orangeTableOne) {
