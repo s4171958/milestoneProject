@@ -26,10 +26,10 @@
    <div class='content'>
       <form action='/vaccRates.html' method='post'>
          <div class='form-group'>
-            <label for='antigentype_drop'>Select the type Antigen Type (Dropdown):</label>
-            <select id='antigentype_drop' name='antigentype_drop'>
+            <label for='regionTypes'>Select the type Region (Dropdown):</label>
+            <select id='regionTypes' name='regionTypes'>
                <!-- This is where the movies types are populated -->
-               <option th:each="antigenType : ${antigenTypes}" th:text="${antigenType}"></option>
+               <option th:each="region : ${regionTypes}" th:text="${region}"></option>
             </select>
          </div>
          <div class='form-group'>
@@ -40,7 +40,7 @@
       </form>
 
       <!-- Display movies. Use check of the size of the array list to optionally show the UL -->
-      <div th:if="${antigen_drop != null}"> 
+      <div th:if="${region_drop != null}"> 
           <h2 th:text="${title_drop}"></h2>
         <table border="1">
         <thead>
@@ -53,7 +53,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="row : ${antigen_drop}">
+            <tr th:each="row : ${region_drop}">
                 
                 <td th:text="${row.antigen}"></td>
                 <td th:text="${row.year}"></td>

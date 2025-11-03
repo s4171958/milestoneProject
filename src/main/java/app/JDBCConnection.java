@@ -28,7 +28,7 @@ public class JDBCConnection {
     }
 
     
-    public static ArrayList<countryAndRegion> getOrangeTableOne(String userAntigen, int userYear) {
+    public static ArrayList<countryAndRegion> getOrangeTableOne(String region, int userYear) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<countryAndRegion> orangeTable = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class JDBCConnection {
                                         "    Country c\r\n" + //
                                         "WHERE \r\n" + //
                                         "    Year =" + userYear + "\r\n" + //
-                                        "    AND LOWER(antigen) LIKE '%" + userAntigen + "%'\r\n" + //
+                                        "    AND UPPER(region) LIKE '%" + region + "%'\r\n" + //
                                         "    AND coverage >= 90\r\n" + //
                                         "    AND coverage NOT LIKE ''\r\n" + //
                                         "ORDER BY coverage desc;";
@@ -100,9 +100,9 @@ public class JDBCConnection {
         return orangeTable;
     }
 
-    public static ArrayList<String> getAntigen() {
+    public static ArrayList<String> getRegion() {
         // Create the ArrayList to return - this time of Movie objects
-        ArrayList<String> antigen = new ArrayList<>();
+        ArrayList<String> region = new ArrayList<>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -115,8 +115,8 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement()) {
                 statement.setQueryTimeout(30);
                 // The Query
-                String query = "SELECT DISTINCT AntigenID \r\n" + //
-                                        "FROM antigen;";
+                String query = "SELECT DISTINCT region\r\n" + //
+                                        "FROM country c;";
                 // Get Result
                 ResultSet results = statement.executeQuery(query);
                 // Process all of the results
@@ -124,10 +124,10 @@ public class JDBCConnection {
                 // We can iterate through all of the database query results
                 while (results.next()) {
                     
-                    String antigenName = results.getString("AntigenID");
+                    String regionName = results.getString("region");
                     
                     // Add the movie object to the array
-                    antigen.add(antigenName);
+                    region.add(regionName);
                 }
                 // Close the statement because we are done with it
                 statement.close();
@@ -148,7 +148,7 @@ public class JDBCConnection {
         }
 
         // Finally we return all of the movies
-        return antigen;
+        return region;
     }
 
     public static String getNumCountries() {

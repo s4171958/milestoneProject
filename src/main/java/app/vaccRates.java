@@ -25,15 +25,15 @@ public class vaccRates implements Handler {
         Map<String, Object> model = new HashMap<>();
 
         // Add into the model the list of types to give to the dropdown
-        ArrayList<String> types = JDBCConnection.getAntigen();
+        ArrayList<String> types = JDBCConnection.getRegion();
         
-        model.put("antigenTypes", types);
+        model.put("regionTypes", types);
 
        
 
        //TODO: nest if/else statement so that both boxes need to be filled before database is called
-        String antigentype_drop = context.formParam("antigentype_drop");
-        if (antigentype_drop == null) {
+        String regionType_drop = context.formParam("regionTypes");
+        if (regionType_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
             model.put("title_drop", new String("No Results to show for dropbox"));
@@ -41,10 +41,10 @@ public class vaccRates implements Handler {
             model.put("movies_drop", movies);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(antigentype_drop + " Statistics"));
-            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(antigentype_drop, 2024);
+            model.put("title_drop", new String(regionType_drop + " Statistics"));
+            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(regionType_drop, 2024);
            
-            model.put("antigen_drop", orangeTableOne);
+            model.put("region_drop", orangeTableOne);
         }
 
         
