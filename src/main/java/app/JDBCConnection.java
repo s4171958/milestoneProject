@@ -46,12 +46,12 @@ public class JDBCConnection {
                 String query = "SELECT DISTINCT\r\n" + //
                                         "    antigen AS Antigen,\r\n" + //
                                         "    year AS Year,\r\n" + //
-                                        "    country AS Country,\r\n" + //
+                                        "    c.name AS Country,\r\n" + //
                                         "    region AS Region,\r\n" + //
                                         "    coverage AS 'Percentage of Target'\r\n" + //
                                         "FROM vaccination v\r\n" + //
-                                        "NATURAL JOIN \r\n" + //
-                                        "    Country c\r\n" + //
+                                        "INNER JOIN \r\n" + //
+                                        "    Country c ON v.country = c.countryID\r\n" + //
                                         "WHERE \r\n" + //
                                         "    Year =" + userYear + "\r\n" + //
                                         "    AND UPPER(region) LIKE '%" + region + "%'\r\n" + //
