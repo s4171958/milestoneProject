@@ -78,8 +78,8 @@
     <div class='form-group'>
             <label for='antigenTypes'>Select the type Region (Dropdown):</label>
             <select id='antigenTypes' name='antigenTypes'>
-               <!-- This is where the movies types are populated -->
-               <option th:each="antigen : ${AntigenTypes}" th:text="${antigen}"></option>
+               <!-- This is where the antigen types are populated -->
+               <option th:each="antigen : ${antigenTypes}" th:text="${antigen}"></option>
             </select>
          </div>
    
