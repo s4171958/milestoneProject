@@ -26,23 +26,28 @@ public class vaccRates implements Handler {
 
         // Add into the model the list of types to give to the dropdown
         ArrayList<String> types = JDBCConnection.getRegion();
-        
         model.put("regionTypes", types);
+
+        ArrayList<String>antigenTypes = JDBCConnection.getAntigen();
+        model.put("antigenTypes", antigenTypes);
 
        
 
        //TODO: nest if/else statement so that both boxes need to be filled before database is called
         String regionType_drop = context.formParam("regionTypes");
-        if (regionType_drop == null) {
+        String year = context.formParam("inf_year_numbox");
+
+
+        if (regionType_drop == null || (year == null && (year.compareTo("2024") <= 0) && (year.compareTo("2000") >= 0))) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
-            model.put("title_drop", new String("No Results to show for dropbox"));
-            ArrayList<String> movies = new ArrayList<>();
-            model.put("movies_drop", movies);
+            model.put("title_drop", new String("No Results to show for dropbox and/or textbox"));
+            ArrayList<String> empty = new ArrayList<>();
+            model.put("region_drop", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(regionType_drop + " Statistics"));
-            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(regionType_drop, 2024);
+            model.put("title_drop", new String(regionType_drop + " Statistics, Year: " + year));
+            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(regionType_drop, year);
            
             model.put("region_drop", orangeTableOne);
         }
@@ -56,41 +61,12 @@ public class vaccRates implements Handler {
             model.put("title_text", new String("No Results to show for textbox"));
             ArrayList<String> movies = new ArrayList<>();
             model.put("movies_text", movies);
-        } else {
-            // If NOT NULL, then lookup the movie by type!
-            model.put("title_text", new String(movietype_textbox + " Movies"));
-            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(movietype_textbox, 2024);
-            ArrayList<String> titles = extractCountry(orangeTableOne);
-            model.put("movies_text", titles);
-        }
+        } 
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
         context.render(TEMPLATE, model);
     }
 
-    //TODO: add other extract methods for other columns, create a table in html and populate with the following data
-    ArrayList<String> extractCountry(ArrayList<countryAndRegion> orangeTableOne) {
-        ArrayList<String> country = new ArrayList<>();
-        for (countryAndRegion row : orangeTableOne) {
-            country.add(row.country);
-        }
-        return country;
-    }
-
-    ArrayList<String> extractRegion(ArrayList<countryAndRegion> orangeTableOne) {
-        ArrayList<String> region = new ArrayList<>();
-        for (countryAndRegion row : orangeTableOne) {
-            region.add(row.region);
-        }
-        return region;
-    }
-
-    ArrayList<String> extractCoverage(ArrayList<countryAndRegion> orangeTableOne) {
-        ArrayList<String> coverage = new ArrayList<>();
-        for (countryAndRegion row : orangeTableOne) {
-            coverage.add(row.percentage);
-        }
-        return coverage;
-    }
+  
 }

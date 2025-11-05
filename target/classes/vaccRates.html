@@ -32,9 +32,10 @@
                <option th:each="region : ${regionTypes}" th:text="${region}"></option>
             </select>
          </div>
+
          <div class='form-group'>
-            <label for='movietype_textbox'>Select the type Movie Type (Textbox)</label>
-            <input class='form-control' id='movietype_textbox' name='movietype_textbox'>
+            <label for='inf_year_numbox'>Select the year of data (Textbox)</label>
+            <input class='form-control' id='inf_year_numbox' name='inf_year_numbox'>
          </div>
          <button type='submit' class='btn btn-primary'>Submit</button>
       </form>
@@ -73,6 +74,14 @@
          </ul>
       </div>
    </div>
+
+    <div class='form-group'>
+            <label for='antigenTypes'>Select the type Region (Dropdown):</label>
+            <select id='antigenTypes' name='antigenTypes'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="antigen : ${AntigenTypes}" th:text="${antigen}"></option>
+            </select>
+         </div>
    
    <div class='footer'>
       <p>COSC2803 Module 0 - Week 07</p>
