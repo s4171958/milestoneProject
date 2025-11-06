@@ -28,7 +28,7 @@ public class JDBCConnection {
     }
 
     
-    public static ArrayList<countryAndRegion> getOrangeTableOne(String userAntigen, int userYear) {
+    public static ArrayList<countryAndRegion> getOrangeTableOne(String region, String userYear) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<countryAndRegion> orangeTable = new ArrayList<>();
 
@@ -46,15 +46,15 @@ public class JDBCConnection {
                 String query = "SELECT DISTINCT\r\n" + //
                                         "    antigen AS Antigen,\r\n" + //
                                         "    year AS Year,\r\n" + //
-                                        "    country AS Country,\r\n" + //
+                                        "    c.name AS Country,\r\n" + //
                                         "    region AS Region,\r\n" + //
                                         "    coverage AS 'Percentage of Target'\r\n" + //
                                         "FROM vaccination v\r\n" + //
-                                        "NATURAL JOIN \r\n" + //
-                                        "    Country c\r\n" + //
+                                        "INNER JOIN \r\n" + //
+                                        "    Country c ON v.country = c.countryID\r\n" + //
                                         "WHERE \r\n" + //
                                         "    Year =" + userYear + "\r\n" + //
-                                        "    AND LOWER(antigen) LIKE '%" + userAntigen + "%'\r\n" + //
+                                        "    AND UPPER(region) LIKE '%" + region + "%'\r\n" + //
                                         "    AND coverage >= 90\r\n" + //
                                         "    AND coverage NOT LIKE ''\r\n" + //
                                         "ORDER BY coverage desc;";
@@ -100,9 +100,9 @@ public class JDBCConnection {
         return orangeTable;
     }
 
-    public static ArrayList<String> getAntigen() {
+    public static ArrayList<String> getRegion() {
         // Create the ArrayList to return - this time of Movie objects
-        ArrayList<String> antigen = new ArrayList<>();
+        ArrayList<String> region = new ArrayList<>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -115,8 +115,8 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement()) {
                 statement.setQueryTimeout(30);
                 // The Query
-                String query = "SELECT DISTINCT AntigenID \r\n" + //
-                                        "FROM antigen;";
+                String query = "SELECT DISTINCT region\r\n" + //
+                                        "FROM country c;";
                 // Get Result
                 ResultSet results = statement.executeQuery(query);
                 // Process all of the results
@@ -124,10 +124,10 @@ public class JDBCConnection {
                 // We can iterate through all of the database query results
                 while (results.next()) {
                     
-                    String antigenName = results.getString("AntigenID");
+                    String regionName = results.getString("region");
                     
                     // Add the movie object to the array
-                    antigen.add(antigenName);
+                    region.add(regionName);
                 }
                 // Close the statement because we are done with it
                 statement.close();
@@ -148,7 +148,58 @@ public class JDBCConnection {
         }
 
         // Finally we return all of the movies
-        return antigen;
+        return region;
+    }
+
+    public static ArrayList<String> getAntigen() {
+            // Create the ArrayList to return - this time of Movie objects
+            ArrayList<String> antigen = new ArrayList<>();
+
+            // Setup the variable for the JDBC connection
+            Connection connection = null;
+
+            try {
+                // Connect to JDBC data base
+                connection = DriverManager.getConnection(DATABASE);
+
+                try ( // Prepare a new SQL Query & Set a timeout
+                        Statement statement = connection.createStatement()) {
+                    statement.setQueryTimeout(30);
+                    // The Query
+                    String query = "SELECT DISTINCT antigen\r\n" + //
+                                            "FROM vaccination v;";
+                    // Get Result
+                    ResultSet results = statement.executeQuery(query);
+                    // Process all of the results
+                    // The "results" variable is similar to an array
+                    // We can iterate through all of the database query results
+                    while (results.next()) {
+                        
+                        String antigenName = results.getString("antigen");
+                        
+                        // Add the movie object to the array
+                        antigen.add(antigenName);
+                    }
+                    // Close the statement because we are done with it
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                // If there is an error, lets just pring the error
+                System.err.println(e.getMessage());
+            } finally {
+                // Safety code to cleanup
+                try {
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    // connection close failed.
+                    System.err.println(e.getMessage());
+                }
+            }
+
+            // Finally we return all of the movies
+            return antigen;
     }
 
     public static String getNumCountries() {
@@ -286,7 +337,83 @@ public class JDBCConnection {
         return vaccinedCountries;
     }
  //TODO: add second table data for orange level code
+    public static ArrayList<orangeTableTwo> getOrangeTableTwo(String year, String antigen) {
+        // Create the ArrayList to return - this time of Movie objects
+        ArrayList<orangeTableTwo> orangeTable = new ArrayList<>();
 
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            try ( // Prepare a new SQL Query & Set a timeout
+                    Statement statement = connection.createStatement()) {
+                statement.setQueryTimeout(30);
+                // The Query
+                String query = "SELECT\r\n" + //
+                                        "    antigen AS Antigen,\r\n" + //
+                                        "    year AS Year,\r\n" + //
+                                        "    COUNT(name) AS 'No. Countries',\r\n" + //
+                                        "    region AS Region\r\n" + //
+                                        "FROM\r\n" + //
+                                        "(SELECT DISTINCT\r\n" + //
+                                        "    antigen,\r\n" + //
+                                        "    c.name,    \r\n" + //
+                                        "    coverage,\r\n" + //
+                                        "    region,\r\n" + //
+                                        "    year\r\n" + //
+                                        "FROM vaccination v\r\n" + //
+                                        "INNER JOIN \r\n" + //
+                                        "    Country c\r\n" + //
+                                        "ON v.country = c.countryid\r\n" + //
+                                        "WHERE coverage >= 90\r\n" + //
+                                        "AND coverage NOT LIKE ''\r\n" + //
+                                        "ORDER BY region)\r\n" + //
+                                        "WHERE LOWER(antigen) LIKE '%" + antigen + "%'\r\n" + //
+                                        "    AND year LIKE '%" + year + " %'\r\n" + //
+                                        "GROUP BY region;";
+                // Get Result
+                ResultSet results = statement.executeQuery(query);
+                // Process all of the results
+                // The "results" variable is similar to an array
+                // We can iterate through all of the database query results
+                while (results.next()) {
+                    // Create a Movie Object
+                    orangeTableTwo row = new orangeTableTwo();
+                    
+                    // Lookup the columns we want, and set the movie object field
+                    // BUT, we must be careful of the column type!
+
+                    row.antigen = results.getString("Antigen");
+                    row.year = results.getString("Year");
+                    row.numCountries = results.getString("No. Countries");
+                    row.region = results.getString("Region");
+                    // Add the movie object to the array
+                    orangeTable.add(row);
+                }
+                // Close the statement because we are done with it
+                statement.close();
+            }
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return orangeTable;
+    }
 
     public ArrayList<Personasdata> getPersonasdata() {
         

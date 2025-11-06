@@ -25,26 +25,25 @@ public class vaccRates implements Handler {
         Map<String, Object> model = new HashMap<>();
 
         // Add into the model the list of types to give to the dropdown
-        ArrayList<String> types = JDBCConnection.getAntigen();
-        
-        model.put("antigenTypes", types);
+        ArrayList<String> types = JDBCConnection.getRegion();
+        model.put("regionTypes", types);
 
-       
+        String regionType_drop = context.formParam("regionTypes");
+        String year = context.formParam("inf_year_numbox");
 
-       //TODO: nest if/else statement so that both boxes need to be filled before database is called
-        String antigentype_drop = context.formParam("antigentype_drop");
-        if (antigentype_drop == null) {
+
+        if (regionType_drop == null || (year == null && (year.compareTo("2024") <= 0) && (year.compareTo("2000") >= 0))) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
-            model.put("title_drop", new String("No Results to show for dropbox"));
-            ArrayList<String> movies = new ArrayList<>();
-            model.put("movies_drop", movies);
+            model.put("title_drop", new String("No Results to show for dropbox and/or textbox"));
+            ArrayList<String> empty = new ArrayList<>();
+            model.put("region_drop", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(antigentype_drop + " Statistics"));
-            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(antigentype_drop, 2024);
+            model.put("title_drop", new String(regionType_drop + " Statistics, Year: " + year));
+            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(regionType_drop, year);
            
-            model.put("antigen_drop", orangeTableOne);
+            model.put("region_drop", orangeTableOne);
         }
 
         
@@ -56,41 +55,33 @@ public class vaccRates implements Handler {
             model.put("title_text", new String("No Results to show for textbox"));
             ArrayList<String> movies = new ArrayList<>();
             model.put("movies_text", movies);
+        } 
+
+        ArrayList<String> antigenTypes = JDBCConnection.getAntigen();
+        model.put("antigenTypes", antigenTypes);
+
+        String antigenType_drop = context.formParam("antigenType");
+
+        if (antigenType_drop == null || (year == null && (year.compareTo("2024") <= 0) && (year.compareTo("2000") >= 0))) {
+            // If NULL, nothing to show, therefore we make some "no results" HTML
+            // Also store empty array list for completness
+            model.put("title_drop", new String("No Results to show for dropbox and/or textbox"));
+            ArrayList<String> empty = new ArrayList<>();
+            model.put("orangeTableTwo", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_text", new String(movietype_textbox + " Movies"));
-            ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(movietype_textbox, 2024);
-            ArrayList<String> titles = extractCountry(orangeTableOne);
-            model.put("movies_text", titles);
+            model.put("title_drop", new String(regionType_drop + " Statistics, Year: " + year));
+            ArrayList<orangeTableTwo> orangeTableTwo = JDBCConnection.getOrangeTableTwo(antigenType_drop, "2024");
+           
+            model.put("orangeTableTwo", orangeTableTwo);
         }
+
+
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
         context.render(TEMPLATE, model);
     }
 
-    //TODO: add other extract methods for other columns, create a table in html and populate with the following data
-    ArrayList<String> extractCountry(ArrayList<countryAndRegion> orangeTableOne) {
-        ArrayList<String> country = new ArrayList<>();
-        for (countryAndRegion row : orangeTableOne) {
-            country.add(row.country);
-        }
-        return country;
-    }
-
-    ArrayList<String> extractRegion(ArrayList<countryAndRegion> orangeTableOne) {
-        ArrayList<String> region = new ArrayList<>();
-        for (countryAndRegion row : orangeTableOne) {
-            region.add(row.region);
-        }
-        return region;
-    }
-
-    ArrayList<String> extractCoverage(ArrayList<countryAndRegion> orangeTableOne) {
-        ArrayList<String> coverage = new ArrayList<>();
-        for (countryAndRegion row : orangeTableOne) {
-            coverage.add(row.percentage);
-        }
-        return coverage;
-    }
+  
 }

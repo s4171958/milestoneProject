@@ -62,3 +62,16 @@ img.top-image {
    background-color: #cccccc;
    padding: 10px;
  }
+
+ .fact-card {
+   border-top: 1px solid #ccc;
+   padding-top: 20px;
+ }
+ 
+ .dashboard {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr); /* 2 columns */
+   gap: 60px 100px; /* row gap and column gap */
+   max-width: 1000px;
+   margin: auto;
+   }
