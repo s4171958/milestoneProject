@@ -35,10 +35,12 @@ public class App {
         app.get(vaccRates.URL, new vaccRates());
         app.get(GreenBPage.URL, new GreenBPage());
         app.get(OrangeBPage.URL, new OrangeBPage());
+        app.get(RedBPage.URL, new RedBPage());
 
         // POST pages can accept form data
         app.post(vaccRates.URL, new vaccRates());
         app.post(OrangeBPage.URL, new OrangeBPage());
+        app.post(RedBPage.URL, new RedBPage());
     }
 
 }
