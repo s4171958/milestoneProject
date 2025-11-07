@@ -372,7 +372,7 @@ public class JDBCConnection {
                                         "AND coverage NOT LIKE ''\r\n" + //
                                         "ORDER BY region)\r\n" + //
                                         "WHERE LOWER(antigen) LIKE '%" + antigen + "%'\r\n" + //
-                                        "    AND year LIKE '%" + year + " %'\r\n" + //
+                                        "    AND year LIKE '%" + year + "%'\r\n" + //
                                         "GROUP BY region;";
                 // Get Result
                 ResultSet results = statement.executeQuery(query);
