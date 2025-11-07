@@ -70,11 +70,7 @@ public class vaccRates implements Handler {
             model.put("orangeTableTwo", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-<<<<<<< HEAD
             model.put("title_drop_two", new String(regionType_drop + " Statistics, Year: " + year));
-=======
-            model.put("title_drop", new String(antigenType_drop + " Type, Year: " + year));
->>>>>>> 528bbc2b156d066e3a024816efa9e8a25ce23395
             ArrayList<orangeTableTwo> orangeTableTwo = JDBCConnection.getOrangeTableTwo(antigenType_drop, "2024");
            
             model.put("orangeTableTwo", orangeTableTwo);
