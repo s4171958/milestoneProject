@@ -49,11 +49,13 @@ public class vaccRates implements Handler {
         }
 
         
-
+        //orangetabletwo drop table
         ArrayList<String> antigenTypes = JDBCConnection.getAntigen();
         model.put("antigenTypes", antigenTypes);
-
         String antigenType_drop = context.formParam("antigenType");
+
+        //orangetabletwo year textbox
+        String yearTwo = context.formParam("inf_year_numbox_two");
 
         if (antigenType_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -64,7 +66,7 @@ public class vaccRates implements Handler {
         } else {
             // If NOT NULL, then lookup the movie by type!
             model.put("title_drop_two", new String(antigenType_drop + " Statistics, Year: " + year));
-            ArrayList<orangeTableTwo> orangeTableTwo = JDBCConnection.getOrangeTableTwo("2024", antigenType_drop);
+            ArrayList<orangeTableTwo> orangeTableTwo = JDBCConnection.getOrangeTableTwo(yearTwo, antigenType_drop);
            
             model.put("orangeTableTwo", orangeTableTwo);
         }

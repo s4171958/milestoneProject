@@ -44,7 +44,12 @@
                <!-- This is where the antigen types are populated -->
                <option th:each="antigen : ${antigenTypes}" th:text="${antigen}"></option>
             </select>
-      </div>
+         </div>
+
+         <div class='form-group'>
+            <label for='inf_year_numbox_two'>Select the year of data (Textbox)</label>
+            <input class='form-control' id='inf_year_numbox_two' name='inf_year_numbox_two'>
+         </div>
    
        <button type='submit' class='btn btn-primary'>Submit</button>
       </form>

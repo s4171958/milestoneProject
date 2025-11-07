@@ -372,7 +372,7 @@ public class JDBCConnection {
                                         "AND coverage NOT LIKE ''\r\n" + //
                                         "ORDER BY region)\r\n" + //
                                         "WHERE LOWER(antigen) LIKE '%" + antigen + "%'\r\n" + //
-                                        "    AND year LIKE '%" + year + "%'\r\n" + //
+                                        "    AND year LIKE '" + year + "'\r\n" + //
                                         "GROUP BY region;";
                 // Get Result
                 ResultSet results = statement.executeQuery(query);
@@ -599,6 +599,64 @@ public class JDBCConnection {
         // Finally we return all of the movies
         return infections;
     }
+
+     public static ArrayList<redTableOne> getRedTableOne() {
+        // Create the ArrayList to return - this time of Movie objects
+        ArrayList<redTableOne> redTable = new ArrayList<>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            try ( // Prepare a new SQL Query & Set a timeout
+                    Statement statement = connection.createStatement()) {
+                statement.setQueryTimeout(30);
+                // The Query
+                String query = ;
+                // Get Result
+                ResultSet results = statement.executeQuery(query);
+                // Process all of the results
+                // The "results" variable is similar to an array
+                // We can iterate through all of the database query results
+                while (results.next()) {
+                    // Create a Movie Object
+                    orangeTableTwo row = new orangeTableTwo();
+                    
+                    // Lookup the columns we want, and set the movie object field
+                    // BUT, we must be careful of the column type!
+
+                    row.antigen = results.getString("Antigen");
+                    row.year = results.getString("Year");
+                    row.numCountries = results.getString("No. Countries");
+                    row.region = results.getString("Region");
+                    // Add the movie object to the array
+                    orangeTable.add(row);
+                }
+                // Close the statement because we are done with it
+                statement.close();
+            }
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return orangeTable;
+    }
+
 }
     
   
