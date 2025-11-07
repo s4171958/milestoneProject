@@ -62,7 +62,7 @@ public class vaccRates implements Handler {
 
         String antigenType_drop = context.formParam("antigenType");
 
-        if (antigenType_drop == null || (year == null && (year.compareTo("2024") <= 0) && (year.compareTo("2000") >= 0))) {
+        if (antigenType_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
             model.put("title_drop", new String("No Results to show for dropbox and/or textbox"));
@@ -70,7 +70,7 @@ public class vaccRates implements Handler {
             model.put("orangeTableTwo", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(regionType_drop + " Statistics, Year: " + year));
+            model.put("title_drop", new String(antigenType_drop + " Type, Year: " + year));
             ArrayList<orangeTableTwo> orangeTableTwo = JDBCConnection.getOrangeTableTwo(antigenType_drop, "2024");
            
             model.put("orangeTableTwo", orangeTableTwo);
