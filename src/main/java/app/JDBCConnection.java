@@ -689,6 +689,10 @@ where description = '""" + infection + "' and year = " + year + ")";
         infectionrates.get(0).country = "Global Average";
         return infectionrates;
     }
+
+    
+
+    
 }
     
   
