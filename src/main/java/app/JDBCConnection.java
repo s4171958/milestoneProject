@@ -372,7 +372,7 @@ public class JDBCConnection {
                                         "AND coverage NOT LIKE ''\r\n" + //
                                         "ORDER BY region)\r\n" + //
                                         "WHERE LOWER(antigen) LIKE '%" + antigen + "%'\r\n" + //
-                                        "    AND year LIKE '%" + year + " %'\r\n" + //
+                                        "    AND year LIKE '" + year + "'\r\n" + //
                                         "GROUP BY region;";
                 // Get Result
                 ResultSet results = statement.executeQuery(query);
@@ -599,96 +599,8 @@ public class JDBCConnection {
         // Finally we return all of the movies
         return infections;
     }
-
-
-    public ArrayList<Infectionrates> getInfectionrates(String infection, String year) {
-        ArrayList<Infectionrates> infectionrates = new ArrayList<Infectionrates>();
-
-        // Setup the variable for the JDBC connection
-        Connection connection = null;
-
-        try {
-            // Connect to JDBC data base
-            connection = DriverManager.getConnection(DATABASE);
-
-            // Prepare a new SQL Query & Set a timeout
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-
-            // The Query
-            String query = """
-                    select name, description, year, round(avg(cases / 100000),3) as cases
-from country
-inner join infectiondata
-on country.countryID = infectiondata.country
-inner join infection_type
-on id = inf_type
-where description = '""" + infection + "' and year = "+ year + """
-        
-        
-union 
-
-select name, description, year, round((cases / 100000) , 3) as avgcases
-from country
-inner join infectiondata
-on country.countryID = infectiondata.country
-inner join infection_type
-on id = inf_type
-where description = '""" + infection + "' and year = " + year + """
- and avgcases > 
-(
-select round(avg(cases / 100000),3)
-from country
-inner join infectiondata
-on country.countryID = infectiondata.country
-inner join infection_type
-on id = inf_type
-where description = '""" + infection + "' and year = " + year; 
-
-                                    
-                                    
-                            
-                
-            
-            System.out.println(query);
-            
-            // Get Result
-            ResultSet results = statement.executeQuery(query);
-
-            // Process all of the results
-            while (results.next()) {
-                // Create a Movie Object
-                Infectionrates infectionratestable = new Infectionrates();
-
-                infectionratestable.infection    = results.getString("description");
-                infectionratestable.country  = results.getString("name");
-                infectionratestable.year  = results.getInt("year");
-                infectionratestable.cases = results.getDouble("cases");
-                infectionrates.add(infectionratestable);
-            }
-
-            // Close the statement because we are done with it
-            statement.close();
-        } catch (SQLException e) {
-            // If there is an error, lets just pring the error
-            System.err.println(e.getMessage());
-        } finally {
-            // Safety code to cleanup
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                // connection close failed.
-                System.err.println(e.getMessage());
-            }
-        }
-
-        // Finally we return all of the movies
-        return infectionrates;
-    }
-    
 }
+    
   
       
 

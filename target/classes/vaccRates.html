@@ -28,7 +28,7 @@
          <div class='form-group'>
             <label for='regionTypes'>Select the type Region (Dropdown):</label>
             <select id='regionTypes' name='regionTypes'>
-               <!-- This is where the movies types are populated -->
+               <!-- This is where the region types are populated -->
                <option th:each="region : ${regionTypes}" th:text="${region}"></option>
             </select>
          </div>
@@ -37,10 +37,24 @@
             <label for='inf_year_numbox'>Select the year of data (Textbox)</label>
             <input class='form-control' id='inf_year_numbox' name='inf_year_numbox'>
          </div>
-         <button type='submit' class='btn btn-primary'>Submit</button>
+
+         <div class='form-group'>
+            <label for='antigenTypes'>Select the type of Antigen (Dropdown):</label>
+            <select id='antigenType' name='antigenType'>
+               <!-- This is where the antigen types are populated -->
+               <option th:each="antigen : ${antigenTypes}" th:text="${antigen}"></option>
+            </select>
+         </div>
+
+         <div class='form-group'>
+            <label for='inf_year_numbox_two'>Select the year of data (Textbox)</label>
+            <input class='form-control' id='inf_year_numbox_two' name='inf_year_numbox_two'>
+         </div>
+   
+       <button type='submit' class='btn btn-primary'>Submit</button>
       </form>
 
-      <!-- Display movies. Use check of the size of the array list to optionally show the UL -->
+      <!-- Display table. Use check of the size of the array list to optionally show the UL -->
       <div th:if="${region_drop != null}"> 
           <h2 th:text="${title_drop}"></h2>
         <table border="1">
@@ -63,28 +77,37 @@
                 <td th:text="${row.percentage}"></td>
             </tr>
         </tbody>
+
     </table>
       </div>
 
-      <!-- Display movies. Use check of the size of the array list to optionally show the UL -->
-      <div th:if="${#lists.size(movies_text) > 0}">
-         <h2 th:text="${title_text}"></h2>
-         <ul>
-            <li th:each="movie : ${movies_text}" th:text="${movie}"></li>
-         </ul>
+        <div th:if="${orangeTableTwo != null}"> 
+            <h2 th:text="${title_drop_two}"></h2>
+         <table border="1">
+         <thead>
+            <tr>
+                  <th>Antigen</th>
+                  <th>Year</th>
+                  <th>No.Countries</th>
+                  <th>Region</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr th:each="rows : ${orangeTableTwo}">
+                  
+                  <td th:text="${rows.antigen}"></td>
+                  <td th:text="${rows.year}"></td>
+                  <td th:text="${rows.numCountries}"></td>
+                  <td th:text="${rows.region}"></td>
+            </tr>
+         </tbody>
+      </table>
       </div>
    </div>
-
-    <div class='form-group'>
-            <label for='antigenTypes'>Select the type Region (Dropdown):</label>
-            <select id='antigenTypes' name='antigenTypes'>
-               <!-- This is where the antigen types are populated -->
-               <option th:each="antigen : ${antigenTypes}" th:text="${antigen}"></option>
-            </select>
-         </div>
    
+
    <div class='footer'>
-      <p>COSC2803 Module 0 - Week 07</p>
+      <p></p>
    </div>
 </body>
 </html>
