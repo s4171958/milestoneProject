@@ -38,6 +38,7 @@ public class App {
 
         // POST pages can accept form data
         app.post(vaccRates.URL, new vaccRates());
+        app.post(OrangeBPage.URL, new OrangeBPage());
     }
 
 }

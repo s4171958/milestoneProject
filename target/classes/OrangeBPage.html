@@ -27,9 +27,77 @@
    <div class = 'common' style="text-align: center; font-size: 20px;">
   <p></p>View the number of cases for different infections, based on economic status <p></p>
 
+
+<div class='content'>
+      <form action='/infectiondata.html' method='post'>
+         <div class='form-group'>
+            <label for='infeco_drop'>Select the economic status:</label>
+            <select id='infeco_drop' name='infeco_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${ecostatuses}" th:text="${type}"></option>
+            </select>
+         </div>
+         
+
+      
+         <div class='form-group'>
+            <label for='inftype_drop'>Select the infection type:</label>
+            <select id='inftype_drop' name='inftype_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${infectiontypes}" th:text="${type}"></option>
+            </select>
+         </div>
+         
+
+      
+         <div class='form-group'>
+            <label for='infyear_drop'>Select the year:</label>
+            <select id='infyear_drop' name='infyear_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${yeardates}" th:text="${type}"></option>
+            </select>
+         </div>         
+
+
+
+
+      
+         <div class='form-group'>
+            <label for='infordering_drop'>Select the variable you want to order the data from (desc means Descending Order):</label>
+            <select id='infordering_drop' name='infordering_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${orderings}" th:text="${type}"></option>
+            </select>
+         </div>         
+         <button type='submit' class='btn btn-primary'>Submit</button>
+      </form>
 </div>
 
- 
+ <div th:if="${infections != null && infections.size() > 0}">
+    <!--<h2 th:text="'Infection Data for ' + ${selectedEcoStatus} + ', ' + ${selectedYear}"></h2> -->
+    <table border="2" style="margin: 25px auto 0 auto;  text-align: center;">
+
+        <thead>
+            <tr>
+                <th>Infection</th>
+                <th>Year</th>
+                <th>Economic Status</th>
+                <th>Country</th>
+                <th>No. of Cases</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="data : ${infections}">
+               <td th:text="${data.infection}"></td>
+               <td th:text="${data.year}"></td>
+               <td th:text="${data.ecophase}"></td>
+                <td th:text="${data.country}"></td>
+                <td th:text="${data.cases}"></td>
+            </tr>
+         </tbody>
+    </table>
+</div>
+
 
 
 

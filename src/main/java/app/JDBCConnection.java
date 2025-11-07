@@ -529,6 +529,76 @@ public class JDBCConnection {
         return students;
     }
     // TODO: Add a method to collect data for infections.
+
+    public ArrayList<Infectiondata> getInfectiondata(String ecophase, String infection, String year, String ordering) {
+        ArrayList<Infectiondata> infections = new ArrayList<Infectiondata>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = """
+                    select description as Infection, name  as Country, phase  as Economic_Phase, infectiondata.year as Year, cases Cases
+                from infectiondata
+                join infection_type
+                on id = inf_type
+                join country
+                on countryID = infectiondata.country                    
+                join economy 
+                on economy = economyID
+                where Infection = '""" + infection + "'  and Economic_phase = '" + ecophase + "' and Year = (" + year + 
+                 ") order by " + ordering; 
+                                
+                            
+                            
+                
+            
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a Movie Object
+                Infectiondata infectiontable = new Infectiondata();
+
+                infectiontable.infection    = results.getString("Infection");
+                infectiontable.country  = results.getString("Country");
+                infectiontable.ecophase  = results.getString("Economic_Phase");
+                infectiontable.year = results.getInt("Year");
+                infectiontable.cases = results.getInt("Cases");
+                infections.add(infectiontable);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return infections;
+    }
 }
     
   
