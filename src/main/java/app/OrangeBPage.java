@@ -80,7 +80,8 @@ public class OrangeBPage implements Handler {
         String infordering_drop = context.formParam("infordering_drop");
 
 
-        if (infeco_drop == null ||inftype_drop == null ||infyear_drop == null ||infordering_drop == null) {
+        if (infeco_drop == null ||inftype_drop == null ||infyear_drop == null || infordering_drop == null) {
+        
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
             ArrayList<String> ecos = new ArrayList<String>();

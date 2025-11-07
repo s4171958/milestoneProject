@@ -600,7 +600,7 @@ public class JDBCConnection {
         return infections;
     }
 
-    public ArrayList<Infectionrates> getInfectionrates(String infection, String year) {
+    public ArrayList<Infectionrates> getInfectionrates(String infection, String year, String ordering) {
         ArrayList<Infectionrates> infectionrates = new ArrayList<Infectionrates>();
 
         // Setup the variable for the JDBC connection
@@ -616,7 +616,7 @@ public class JDBCConnection {
 
             // The Query
             String query = """
-                    select name, description, year, round(avg(cases / 100000),3) as cases
+                    select name as Country, description, year, round(avg(cases / 100000),3) as cases
 from country
 inner join infectiondata
 on country.countryID = infectiondata.country
@@ -642,7 +642,8 @@ inner join infectiondata
 on country.countryID = infectiondata.country
 inner join infection_type
 on id = inf_type
-where description = '""" + infection + "' and year = " + year + ")";
+where description = '""" + infection + "' and year = " + year + ")" +
+" order by " + ordering;
             
                     
                     
@@ -661,7 +662,7 @@ where description = '""" + infection + "' and year = " + year + ")";
                 Infectionrates infectionratestable = new Infectionrates();
 
                 infectionratestable.infection    = results.getString("description");
-                infectionratestable.country  = results.getString("name");
+                infectionratestable.country  = results.getString("Country");
                 infectionratestable.year  = results.getInt("year");
                 infectionratestable.cases = results.getDouble("cases");
                 

@@ -47,6 +47,14 @@
                <option th:each="type : ${infectiontypes}" th:text="${type}"></option>
             </select>
          </div>
+
+          <div class='form-group'>
+            <label for='infordering_drop'>Select the variable you want to sort the data by in ascending order:</label>
+            <select id='infordering_drop' name='infordering_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${orderings}" th:text="${type}"></option>
+            </select>
+         </div>
          
 
       

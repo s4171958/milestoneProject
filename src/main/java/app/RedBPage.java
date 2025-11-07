@@ -38,6 +38,7 @@ public class RedBPage implements Handler {
 
         // Add into the model the list of types to give to the dropdown
         ArrayList<String> infectiontypes = new ArrayList<String>();
+        ArrayList<String> orderings = new ArrayList<String>();
         ArrayList<Integer> yeardates = new ArrayList<>(List.of(2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024));
 
         model.put("yeardates", yeardates);
@@ -49,7 +50,9 @@ public class RedBPage implements Handler {
         infectiontypes.add("Pertussis");
         model.put("infectiontypes", infectiontypes);
 
-
+           orderings.add("Cases");
+        orderings.add("Country");
+        model.put("orderings", orderings);
         
         // Look up from JDBC
         JDBCConnection jdbc = new JDBCConnection();
@@ -62,10 +65,10 @@ public class RedBPage implements Handler {
         
         String inftype_drop = context.formParam("inftype_drop");
         String infyear_drop = context.formParam("infyear_drop");
-        
+        String infordering_drop = context.formParam("infordering_drop");
 
 
-        if (inftype_drop == null ||infyear_drop == null) {
+        if (inftype_drop == null ||infyear_drop == null || infordering_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
             ArrayList<String> ecos = new ArrayList<String>();
@@ -73,7 +76,7 @@ public class RedBPage implements Handler {
             
         } else {
             // If NOT NULL, then lookup the movie by type!
-            ArrayList<Infectionrates> infectionrates = jdbc.getInfectionrates(inftype_drop, infyear_drop);
+            ArrayList<Infectionrates> infectionrates = jdbc.getInfectionrates(inftype_drop, infyear_drop, infordering_drop);
          model.put("infectionrates", infectionrates);
         }
         
