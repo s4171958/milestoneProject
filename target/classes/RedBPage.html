@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title>WHO Database</title>
+
+   <link rel="stylesheet" type="text/css" href="common.css" />
+</head>
+<body>
+     <div class='topnav'>
+      <a href='/'>Homepage</a>
+      <a href='aboutus.html'>About Us</a>
+      <a href='vaccRates.html'>Vac Rates</a>
+      <a href='infectiondata.html'>Infection Data</a>
+      <a href='/'>Growth Rates</a>
+      <a href='infectionrates.html'>Comparing Infection Rates</a>
+   </div>
+   
+   <div class='header' id="${test}">
+      <h1>
+         <img src='WHO_database_logo.png' class='top-image' alt='RMIT logo' height='75'>
+         Comparing Infection Rates
+      </h1>
+   </div>
+
+
+   <div class = 'common' style="text-align: center; font-size: 20px;">
+  <p></p>View the countries that have cases higher than the global average, for different infections <p></p>
+
+
+<div class='content'>
+      <form action='/infectionrates.html' method='post'>
+         <div class='form-group'>
+            <label for='infyear_drop'>Select the year:</label>
+            <select id='infyear_drop' name='infyear_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${yeardates}" th:text="${type}"></option>
+            </select>
+         </div>
+         
+
+      
+         <div class='form-group'>
+            <label for='inftype_drop'>Select the infection type:</label>
+            <select id='inftype_drop' name='inftype_drop'>
+               <!-- This is where the movies types are populated -->
+               <option th:each="type : ${infectiontypes}" th:text="${type}"></option>
+            </select>
+         </div>
+         
+
+      
+           
+         <button type='submit' class='btn btn-primary'>Submit</button>
+      </form>
+</div>
+
+ <div th:if="${infectionrates != null && infectionrates.size() > 0}">
+    <!--<h2 th:text="'Infection Data for ' + ${selectedEcoStatus} + ', ' + ${selectedYear}"></h2> -->
+    <table border="2" style="margin: 25px auto 0 auto;  text-align: center;">
+
+        <thead>
+            <tr>
+                <th>Infection</th>
+                <th>Year</th>
+                <th>Country</th>
+                <th>No. of Cases per 100,000 people</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="data : ${infectionrates}">
+               <td th:text="${data.infection}"></td>
+               <td th:text="${data.year}"></td>
+                <td th:text="${data.country}"></td>
+                <td th:text="${data.cases}"></td>
+            </tr>
+         </tbody>
+    </table>
+</div>
+
+
+
+
+
+</body>
+</html>

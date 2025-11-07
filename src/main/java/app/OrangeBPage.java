@@ -1,5 +1,6 @@
 package app;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,8 @@ public class OrangeBPage implements Handler {
         ArrayList<Integer> yeardates = new ArrayList<>(List.of(2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024));
 
         model.put("yeardates", yeardates);
+
+        
         
         ecostatuses.add("Low Income");
         ecostatuses.add("Lower Middle Income");
@@ -101,19 +104,5 @@ public class OrangeBPage implements Handler {
      * array list of movies. This is needed to pass an arraylist of
      * strings to Thymeleaf as we can't use our own custom classes.
      */
-    ArrayList<String> extractInfCountries(ArrayList<Infectiondata> infections) {
-        ArrayList<String> countries = new ArrayList<String>();
-        for (Infectiondata infectiondatas : infections) {
-            countries.add(infectiondatas.country);
-        }
-        return countries;
-    }
-
-    ArrayList<Integer> extractInfCases(ArrayList<Infectiondata> infections) {
-        ArrayList<Integer> casenumbers = new ArrayList<Integer>();
-        for (Infectiondata infectiondatas : infections) {
-            casenumbers.add(infectiondatas.cases);
-        }
-        return casenumbers;
-    }
+   
 }

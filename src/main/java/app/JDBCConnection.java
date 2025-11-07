@@ -642,7 +642,7 @@ inner join infectiondata
 on country.countryID = infectiondata.country
 inner join infection_type
 on id = inf_type
-where description = '""" + infection + "' and year = " + year;
+where description = '""" + infection + "' and year = " + year + ")";
             
                     
                     
@@ -686,6 +686,7 @@ where description = '""" + infection + "' and year = " + year;
         }
 
         // Finally we return all of the movies
+        infectionrates.get(0).country = "Global Average";
         return infectionrates;
     }
 }

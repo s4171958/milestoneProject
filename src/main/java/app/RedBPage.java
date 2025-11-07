@@ -89,19 +89,5 @@ public class RedBPage implements Handler {
      * array list of movies. This is needed to pass an arraylist of
      * strings to Thymeleaf as we can't use our own custom classes.
      */
-    ArrayList<String> extractInfCountries(ArrayList<Infectiondata> infections) {
-        ArrayList<String> countries = new ArrayList<String>();
-        for (Infectiondata infectiondatas : infections) {
-            countries.add(infectiondatas.country);
-        }
-        return countries;
-    }
-
-    ArrayList<Integer> extractInfCases(ArrayList<Infectiondata> infections) {
-        ArrayList<Integer> casenumbers = new ArrayList<Integer>();
-        for (Infectiondata infectiondatas : infections) {
-            casenumbers.add(infectiondatas.cases);
-        }
-        return casenumbers;
-    }
+  
 }
