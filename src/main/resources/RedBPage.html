@@ -12,34 +12,29 @@
       <a href='aboutus.html'>About Us</a>
       <a href='vaccRates.html'>Vac Rates</a>
       <a href='infectiondata.html'>Infection Data</a>
-<<<<<<< HEAD
-      <a href='growthRates.html'>Growth Rates</a>
-      <a href='/'>Average Infection Rates</a>
-=======
       <a href='/'>Growth Rates</a>
       <a href='infectionrates.html'>Comparing Infection Rates</a>
->>>>>>> 2218d3c61342223bb21960241a3dc4f5fe69ddda
    </div>
    
    <div class='header' id="${test}">
       <h1>
          <img src='WHO_database_logo.png' class='top-image' alt='RMIT logo' height='75'>
-         Infection Data
+         Comparing Infection Rates
       </h1>
    </div>
 
 
    <div class = 'common' style="text-align: center; font-size: 20px;">
-  <p></p>View the number of cases for different infections, based on economic status <p></p>
+  <p></p>View the countries that have cases higher than the global average, for different infections <p></p>
 
 
 <div class='content'>
-      <form action='/infectiondata.html' method='post'>
+      <form action='/infectionrates.html' method='post'>
          <div class='form-group'>
-            <label for='infeco_drop'>Select the economic status:</label>
-            <select id='infeco_drop' name='infeco_drop'>
+            <label for='infyear_drop'>Select the year:</label>
+            <select id='infyear_drop' name='infyear_drop'>
                <!-- This is where the movies types are populated -->
-               <option th:each="type : ${ecostatuses}" th:text="${type}"></option>
+               <option th:each="type : ${yeardates}" th:text="${type}"></option>
             </select>
          </div>
          
@@ -52,33 +47,23 @@
                <option th:each="type : ${infectiontypes}" th:text="${type}"></option>
             </select>
          </div>
-         
 
-      
-         <div class='form-group'>
-            <label for='infyear_drop'>Select the year:</label>
-            <select id='infyear_drop' name='infyear_drop'>
-               <!-- This is where the movies types are populated -->
-               <option th:each="type : ${yeardates}" th:text="${type}"></option>
-            </select>
-         </div>         
-
-
-
-
-      
-         <div class='form-group'>
-            <label for='infordering_drop'>Select the variable you want to sort the data by (desc means Descending Order):</label>
+          <div class='form-group'>
+            <label for='infordering_drop'>Select the variable you want to sort the data by in ascending order:</label>
             <select id='infordering_drop' name='infordering_drop'>
                <!-- This is where the movies types are populated -->
                <option th:each="type : ${orderings}" th:text="${type}"></option>
             </select>
-         </div>         
+         </div>
+         
+
+      
+           
          <button type='submit' class='btn btn-primary'>Submit</button>
       </form>
 </div>
 
- <div th:if="${infections != null && infections.size() > 0}">
+ <div th:if="${infectionrates != null && infectionrates.size() > 0}">
     <!--<h2 th:text="'Infection Data for ' + ${selectedEcoStatus} + ', ' + ${selectedYear}"></h2> -->
     <table border="2" style="margin: 25px auto 0 auto;  text-align: center;">
 
@@ -86,16 +71,14 @@
             <tr>
                 <th>Infection</th>
                 <th>Year</th>
-                <th>Economic Status</th>
                 <th>Country</th>
-                <th>No. of Cases</th>
+                <th>No. of Cases per 100,000 people</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="data : ${infections}">
+            <tr th:each="data : ${infectionrates}">
                <td th:text="${data.infection}"></td>
                <td th:text="${data.year}"></td>
-               <td th:text="${data.ecophase}"></td>
                 <td th:text="${data.country}"></td>
                 <td th:text="${data.cases}"></td>
             </tr>

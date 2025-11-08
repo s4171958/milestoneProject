@@ -1,6 +1,5 @@
 package app;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,13 +17,13 @@ import io.javalin.http.Handler;
  * @author Timothy Wiley, 2023. email: timothy.wiley@rmit.edu.au
  * @author Santha Sumanasekara, 2021. email: santha.sumanasekara@rmit.edu.au
  */
-public class OrangeBPage implements Handler {
+public class RedBPage implements Handler {
 
     // URL of this page relative to http://localhost:7001/
-    public static final String URL = "/infectiondata.html";
+    public static final String URL = "/infectionrates.html";
 
     // Name of the Thymeleaf HTML template page in the resources folder
-    private static final String TEMPLATE = ("OrangeBPage.html");
+    private static final String TEMPLATE = ("RedBPage.html");
 
     @Override
     public void handle(Context context) throws Exception {
@@ -38,34 +37,23 @@ public class OrangeBPage implements Handler {
         
 
         // Add into the model the list of types to give to the dropdown
-        ArrayList<String> ecostatuses = new ArrayList<String>();
         ArrayList<String> infectiontypes = new ArrayList<String>();
         ArrayList<String> orderings = new ArrayList<String>();
         ArrayList<Integer> yeardates = new ArrayList<>(List.of(2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024));
 
         model.put("yeardates", yeardates);
-
         
         
-        ecostatuses.add("Low Income");
-        ecostatuses.add("Lower Middle Income");
-        ecostatuses.add("Upper Middle Income");
-        ecostatuses.add("High Income");
-        model.put("ecostatuses", ecostatuses);
-
         
         infectiontypes.add("Measles");
         infectiontypes.add("Rubella");
         infectiontypes.add("Pertussis");
         model.put("infectiontypes", infectiontypes);
 
-
-        
-        orderings.add("Cases");
-        orderings.add("Cases desc");
+           orderings.add("Cases");
         orderings.add("Country");
-        orderings.add("Country desc");
         model.put("orderings", orderings);
+        
         // Look up from JDBC
         JDBCConnection jdbc = new JDBCConnection();
 
@@ -74,23 +62,22 @@ public class OrangeBPage implements Handler {
          * Need to be Careful!!
          *  If the form is not filled in, then the form will return null!
         */
-        String infeco_drop = context.formParam("infeco_drop");
+        
         String inftype_drop = context.formParam("inftype_drop");
         String infyear_drop = context.formParam("infyear_drop");
         String infordering_drop = context.formParam("infordering_drop");
 
 
-        if (infeco_drop == null ||inftype_drop == null ||infyear_drop == null || infordering_drop == null) {
-        
+        if (inftype_drop == null ||infyear_drop == null || infordering_drop == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
             ArrayList<String> ecos = new ArrayList<String>();
-            model.put("infections", ecos);
+            model.put("infectionrates", ecos);
             
         } else {
             // If NOT NULL, then lookup the movie by type!
-            ArrayList<Infectiondata> infections = jdbc.getInfectiondata(infeco_drop, inftype_drop, infyear_drop, infordering_drop);
-         model.put("infections", infections);
+            ArrayList<Infectionrates> infectionrates = jdbc.getInfectionrates(inftype_drop, infyear_drop, infordering_drop);
+         model.put("infectionrates", infectionrates);
         }
         
 
@@ -105,5 +92,5 @@ public class OrangeBPage implements Handler {
      * array list of movies. This is needed to pass an arraylist of
      * strings to Thymeleaf as we can't use our own custom classes.
      */
-   
+  
 }

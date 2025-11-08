@@ -12,8 +12,13 @@
       <a href='aboutus.html'>About Us</a>
       <a href='vaccRates.html'>Vac Rates</a>
       <a href='infectiondata.html'>Infection Data</a>
+<<<<<<< HEAD
       <a href='growthRates.html'>Growth Rates</a>
       <a href='/'>Average Infection Rates</a>
+=======
+      <a href='/'>Growth Rates</a>
+      <a href='infectionrates.html'>Comparing Infection Rates</a>
+>>>>>>> 2218d3c61342223bb21960241a3dc4f5fe69ddda
    </div>
    
    <div class='header' id="${test}">
@@ -63,7 +68,7 @@
 
       
          <div class='form-group'>
-            <label for='infordering_drop'>Select the variable you want to order the data from (desc means Descending Order):</label>
+            <label for='infordering_drop'>Select the variable you want to sort the data by (desc means Descending Order):</label>
             <select id='infordering_drop' name='infordering_drop'>
                <!-- This is where the movies types are populated -->
                <option th:each="type : ${orderings}" th:text="${type}"></option>
