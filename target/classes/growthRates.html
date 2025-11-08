@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title> WHO Database - Growth Rates</title>
+
+   <link rel="stylesheet" type="text/css" href="common.css" />
+</head>
+<body>
+   <div class='topnav'>
+      <a href='/'>Homepage</a>
+      <a href='aboutus.html'>About</a>
+      <a href='vaccRates.html'>Vac Rates</a>
+      <a href='infectiondata.html'>Infection Data</a>
+      <a href='/'>Growth Rates</a>
+      <a href='/'>Average Infection Rates</a>
+   </div>
+   
+   <div class='header'>
+      <h1>
+         <img src='WHO_database_logo.png' class='top-image' alt='RMIT logo' height='75'>
+         Growth Rates for Antigens
+      </h1>
+   </div>
+
+   <div class='content'>
+      <form action='/growthRates.html' method='post'>
+
+         <div class='form-group'>
+            <label for='start_year_numbox'>Select the year of data (Textbox)</label>
+            <input class='form-control' id='start_year_numbox' name='start_year_numbox'>
+         </div>
+
+         <div class='form-group'>
+            <label for='end_year_numbox'>Select the year of data (Textbox)</label>
+            <input class='form-control' id='end_year_numbox' name='end_year_numbox'>
+         </div>
+   
+       <button type='submit' class='btn btn-primary'>Submit</button>
+      </form>
+
+      <!-- Display table. Use check of the size of the array list to optionally show the UL -->
+      <div th:if="${redTableOne != null}"> 
+          <h2 th:text="${title_drop}"></h2>
+        <table border="1">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Starting Year</th>
+                <th>End year</th>
+                <th>Antigen</th>
+                <th> Vac Increase (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="row : ${redTableOne}">
+                
+                <td th:text="${row.country}"></td>
+                <td th:text="${row.startYear}"></td>
+                <td th:text="${row.endYear}"></td>
+                <td th:text="${row.anti}"></td>
+                <td th:text="${row.vacincrease}"></td>
+            </tr>
+        </tbody>
+
+   </div>
+   
+
+   <div class='footer'>
+      <p></p>
+   </div>
+</body>
+</html>

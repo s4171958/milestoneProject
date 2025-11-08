@@ -7,6 +7,8 @@ public class redTableOne {
     public String anti;
     public String vacincrease;
 
+    public redTableOne() {}
+
     public redTableOne(String country, String startYear, String endYear, String anti, String vacincrease) {
         this.country = country;
         this.startYear = startYear;

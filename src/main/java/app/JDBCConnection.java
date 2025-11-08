@@ -336,7 +336,7 @@ public class JDBCConnection {
         }
         return vaccinedCountries;
     }
- //TODO: add second table data for orange level code
+ 
     public static ArrayList<orangeTableTwo> getOrangeTableTwo(String year, String antigen) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<orangeTableTwo> orangeTable = new ArrayList<>();
@@ -528,7 +528,7 @@ public class JDBCConnection {
        
         return students;
     }
-    // TODO: Add a method to collect data for infections.
+    
 
     public ArrayList<Infectiondata> getInfectiondata(String ecophase, String infection, String year, String ordering) {
         ArrayList<Infectiondata> infections = new ArrayList<Infectiondata>();
@@ -600,6 +600,8 @@ public class JDBCConnection {
         return infections;
     }
 
+
+    // access query
      public static ArrayList<redTableOne> getRedTableOne() {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<redTableOne> redTable = new ArrayList<>();
@@ -615,25 +617,47 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement()) {
                 statement.setQueryTimeout(30);
                 // The Query
-                String query = ;
-                // Get Result
-                ResultSet results = statement.executeQuery(query);
+
+                String query = "SELECT \r\n" + //
+                                        "    s.country,\r\n" + //
+                                        "    s.year AS \"Start Year\",\r\n" + //
+                                        "    e.year AS \"End Year\",\r\n" + //
+                                        "    s.anti,\r\n" + //
+                                        "    ROUND(e.vacRate - s.vacRate, 2) AS VacIncrease\r\n" + //
+                                        "FROM (\r\n" + //
+                                        "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
+                                        "    FROM vacRate\r\n" + //
+                                        "    WHERE year = 2000\r\n" + //
+                                        "    GROUP BY country, anti, year) s\r\n" + //
+                                        "JOIN (\r\n" + //
+                                        "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
+                                        "    FROM vacRate\r\n" + //
+                                        "    WHERE year = 2018\r\n" + //
+                                        "    GROUP BY country, anti, year) e\r\n" + //
+                                        "  ON s.country = e.country\r\n" + //
+                                        "  AND LOWER(s.anti) = LOWER(e.anti)\r\n" + //
+                                        "WHERE LOWER(s.anti) = 'dtpcv1'\r\n" + //
+                                        "ORDER BY VacIncrease DESC\r\n" + //
+                                        "LIMIT 5;";
+                ResultSet results = statement.executeQuery(query);   
+
                 // Process all of the results
                 // The "results" variable is similar to an array
                 // We can iterate through all of the database query results
                 while (results.next()) {
                     // Create a Movie Object
-                    orangeTableTwo row = new orangeTableTwo();
+                    redTableOne row = new redTableOne();
                     
                     // Lookup the columns we want, and set the movie object field
                     // BUT, we must be careful of the column type!
 
-                    row.antigen = results.getString("Antigen");
-                    row.year = results.getString("Year");
-                    row.numCountries = results.getString("No. Countries");
-                    row.region = results.getString("Region");
+                    row.country = results.getString("country");
+                    row.startYear = results.getString("Start Year");
+                    row.endYear = results.getString("End Year");
+                    row.anti = results.getString("anti");
+                    row.vacincrease = results.getString("VacIncrease");
                     // Add the movie object to the array
-                    orangeTable.add(row);
+                    redTable.add(row);
                 }
                 // Close the statement because we are done with it
                 statement.close();
@@ -654,7 +678,7 @@ public class JDBCConnection {
         }
 
         // Finally we return all of the movies
-        return orangeTable;
+        return redTable;
     }
 
 }
