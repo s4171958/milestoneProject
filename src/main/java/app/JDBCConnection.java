@@ -735,7 +735,7 @@ public class JDBCConnection {
      }
 
     // access query
-     public static ArrayList<redTableOne> getRedTableOne(String startYear, String endYear, String antigen) {
+     public static ArrayList<redTableOne> getRedTableOne(String startYear, String endYear, String antigen, String limit) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<redTableOne> redTable = new ArrayList<>();
    
@@ -772,7 +772,7 @@ public class JDBCConnection {
                                         "  AND LOWER(s.anti) = LOWER(e.anti)\r\n" + //
                                         "WHERE UPPER(s.anti) = '" + antigen + "'\r\n" + //
                                         "ORDER BY VacIncrease DESC\r\n" + //
-                                        "LIMIT 5;";
+                                        "LIMIT " + limit + ";";
                 ResultSet results = statement.executeQuery(query);   
 
                 // Process all of the results

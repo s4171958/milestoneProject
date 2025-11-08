@@ -43,6 +43,11 @@
                <option th:each="antigen : ${antigenTypes}" th:text="${antigen}"></option>
             </select>
          </div>
+
+          <div class='form-group'>
+            <label for='limit'>Select top countries: (Textbox)</label>
+            <input class='form-control' id='limit' name='limit'>
+         </div>
    
        <button type='submit' class='btn btn-primary'>Submit</button>
       </form>

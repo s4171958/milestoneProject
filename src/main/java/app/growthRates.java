@@ -39,6 +39,8 @@ public class growthRates implements Handler {
         model.put("antigenTypes", antigenTypes);
         String antigenType_drop = context.formParam("antigenType");
 
+        String limit = context.formParam("limit");
+
         //prints table one
         if (startYear == null || endYear == null) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -51,7 +53,7 @@ public class growthRates implements Handler {
             model.put("title_drop", new String("Statistics from " + startYear + " to " + endYear + ": from" + antigenType_drop));
             
             JDBCConnection.createView();
-            ArrayList<redTableOne> redTableOne = JDBCConnection.getRedTableOne(startYear,endYear,antigenType_drop);
+            ArrayList<redTableOne> redTableOne = JDBCConnection.getRedTableOne(startYear,endYear,antigenType_drop,limit);
            
             model.put("redTableOne", redTableOne);
             JDBCConnection.deleteView();
