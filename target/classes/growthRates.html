@@ -27,13 +27,21 @@
       <form action='/growthRates.html' method='post'>
 
          <div class='form-group'>
-            <label for='start_year_numbox'>Select the year of data (Textbox)</label>
+            <label for='start_year_numbox'>Select the starting year of data (Textbox)</label>
             <input class='form-control' id='start_year_numbox' name='start_year_numbox'>
          </div>
 
          <div class='form-group'>
-            <label for='end_year_numbox'>Select the year of data (Textbox)</label>
+            <label for='end_year_numbox'>Select the ending year of data (Textbox)</label>
             <input class='form-control' id='end_year_numbox' name='end_year_numbox'>
+         </div>
+
+         <div class='form-group'>
+            <label for='antigenTypes'>Select the type of Antigen (Dropdown):</label>
+            <select id='antigenType' name='antigenType'>
+               <!-- This is where the antigen types are populated -->
+               <option th:each="antigen : ${antigenTypes}" th:text="${antigen}"></option>
+            </select>
          </div>
    
        <button type='submit' class='btn btn-primary'>Submit</button>

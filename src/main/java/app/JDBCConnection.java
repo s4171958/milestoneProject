@@ -735,7 +735,7 @@ public class JDBCConnection {
      }
 
     // access query
-     public static ArrayList<redTableOne> getRedTableOne() {
+     public static ArrayList<redTableOne> getRedTableOne(String startYear, String endYear, String antigen) {
         // Create the ArrayList to return - this time of Movie objects
         ArrayList<redTableOne> redTable = new ArrayList<>();
    
@@ -761,16 +761,16 @@ public class JDBCConnection {
                                         "FROM (\r\n" + //
                                         "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
                                         "    FROM vacRate\r\n" + //
-                                        "    WHERE year = 2000\r\n" + //
+                                        "    WHERE year = " + startYear + "\r\n" + //
                                         "    GROUP BY country, anti, year) s\r\n" + //
                                         "JOIN (\r\n" + //
                                         "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
                                         "    FROM vacRate\r\n" + //
-                                        "    WHERE year = 2018\r\n" + //
+                                        "    WHERE year =" + endYear + "\r\n" + //
                                         "    GROUP BY country, anti, year) e\r\n" + //
                                         "  ON s.country = e.country\r\n" + //
                                         "  AND LOWER(s.anti) = LOWER(e.anti)\r\n" + //
-                                        "WHERE LOWER(s.anti) = 'dtpcv1'\r\n" + //
+                                        "WHERE UPPER(s.anti) = '" + antigen + "'\r\n" + //
                                         "ORDER BY VacIncrease DESC\r\n" + //
                                         "LIMIT 5;";
                 ResultSet results = statement.executeQuery(query);   
