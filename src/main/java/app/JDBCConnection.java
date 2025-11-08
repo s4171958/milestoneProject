@@ -815,7 +815,48 @@ public class JDBCConnection {
 
         // Finally we return all of the movies
         return redTable;
-     }
+    }
+
+    public static void deleteView() {
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            try ( // Prepare a new SQL Query & Set a timeout
+                    Statement statement = connection.createStatement()) {
+                statement.setQueryTimeout(30);
+                // The Query
+
+                String query = "DROP VIEW vacRate;";
+                statement.executeQuery(query);   
+
+            
+                statement.close();
+            }
+
+            
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+
+    }
+
 
        
 
