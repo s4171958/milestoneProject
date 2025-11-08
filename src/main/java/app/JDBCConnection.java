@@ -601,6 +601,7 @@ public class JDBCConnection {
          // Prepare a new SQL Query & Set a timeout
             Connection connection = null;
             try {
+                connection = DriverManager.getConnection(DATABASE);
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
