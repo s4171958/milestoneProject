@@ -677,7 +677,62 @@ public class JDBCConnection {
         return infectionrates;
 
     }
+    // create view query
+    public static void createView() {
+        // Create the ArrayList to return - this time of Movie objects
+   
 
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            try ( // Prepare a new SQL Query & Set a timeout
+                    Statement statement = connection.createStatement()) {
+                statement.setQueryTimeout(30);
+                // The Query
+
+                String query = "CREATE VIEW vacRate AS\r\n" + //
+                                        "SELECT \r\n" + //
+                                        "    cp.country,\r\n" + //
+                                        "    v.year AS year,\r\n" + //
+                                        "    antigen AS anti,\r\n" + //
+                                        "    ROUND((v.doses*100/cp.population), 2) AS 'vacRate'\r\n" + //
+                                        "FROM countrypopulation cp\r\n" + //
+                                        "INNER JOIN vaccination v\r\n" + //
+                                        "    ON cp.country = v.country\r\n" + //
+                                        "    AND cp.year = v.year\r\n" + //
+                                        "WHERE vacRate is not '';";
+                                        
+                statement.executeQuery(query);   
+
+                // Process all of the results
+                // The "results" variable is similar to an array
+                // We can iterate through all of the database query results
+               
+                // Close the statement because we are done with it
+                statement.close();
+            }
+
+            
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+     }
 
     // access query
      public static ArrayList<redTableOne> getRedTableOne() {

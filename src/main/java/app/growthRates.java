@@ -45,9 +45,12 @@ public class growthRates implements Handler {
         } else {
             // If NOT NULL, then lookup the movie by type!
             model.put("title_drop", new String("Statistics from " + startYear + " to " + endYear));
+            
+            JDBCConnection.createView();
             ArrayList<redTableOne> redTableOne = JDBCConnection.getRedTableOne();
            
             model.put("redTableOne", redTableOne);
+            JDBCConnection.deleteView();
         }
 
         // DO NOT MODIFY THIS
