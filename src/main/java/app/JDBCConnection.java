@@ -599,76 +599,10 @@ public class JDBCConnection {
         // Finally we return all of the movies
         return infections;
     }
-
-<<<<<<< HEAD
-
-    // access query
-     public static ArrayList<redTableOne> getRedTableOne() {
-        // Create the ArrayList to return - this time of Movie objects
-        ArrayList<redTableOne> redTable = new ArrayList<>();
-=======
-    public ArrayList<Infectionrates> getInfectionrates(String infection, String year, String ordering) {
+    
+     public ArrayList<Infectionrates> getInfectionrates(String infection, String year, String ordering) {
         ArrayList<Infectionrates> infectionrates = new ArrayList<Infectionrates>();
->>>>>>> 2218d3c61342223bb21960241a3dc4f5fe69ddda
-
-        // Setup the variable for the JDBC connection
-        Connection connection = null;
-
-        try {
-            // Connect to JDBC data base
-            connection = DriverManager.getConnection(DATABASE);
-
-<<<<<<< HEAD
-            try ( // Prepare a new SQL Query & Set a timeout
-                    Statement statement = connection.createStatement()) {
-                statement.setQueryTimeout(30);
-                // The Query
-
-                String query = "SELECT \r\n" + //
-                                        "    s.country,\r\n" + //
-                                        "    s.year AS \"Start Year\",\r\n" + //
-                                        "    e.year AS \"End Year\",\r\n" + //
-                                        "    s.anti,\r\n" + //
-                                        "    ROUND(e.vacRate - s.vacRate, 2) AS VacIncrease\r\n" + //
-                                        "FROM (\r\n" + //
-                                        "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
-                                        "    FROM vacRate\r\n" + //
-                                        "    WHERE year = 2000\r\n" + //
-                                        "    GROUP BY country, anti, year) s\r\n" + //
-                                        "JOIN (\r\n" + //
-                                        "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
-                                        "    FROM vacRate\r\n" + //
-                                        "    WHERE year = 2018\r\n" + //
-                                        "    GROUP BY country, anti, year) e\r\n" + //
-                                        "  ON s.country = e.country\r\n" + //
-                                        "  AND LOWER(s.anti) = LOWER(e.anti)\r\n" + //
-                                        "WHERE LOWER(s.anti) = 'dtpcv1'\r\n" + //
-                                        "ORDER BY VacIncrease DESC\r\n" + //
-                                        "LIMIT 5;";
-                ResultSet results = statement.executeQuery(query);   
-
-                // Process all of the results
-                // The "results" variable is similar to an array
-                // We can iterate through all of the database query results
-                while (results.next()) {
-                    // Create a Movie Object
-                    redTableOne row = new redTableOne();
-                    
-                    // Lookup the columns we want, and set the movie object field
-                    // BUT, we must be careful of the column type!
-
-                    row.country = results.getString("country");
-                    row.startYear = results.getString("Start Year");
-                    row.endYear = results.getString("End Year");
-                    row.anti = results.getString("anti");
-                    row.vacincrease = results.getString("VacIncrease");
-                    // Add the movie object to the array
-                    redTable.add(row);
-                }
-                // Close the statement because we are done with it
-                statement.close();
-=======
-            // Prepare a new SQL Query & Set a timeout
+         // Prepare a new SQL Query & Set a timeout
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
@@ -725,7 +659,72 @@ where description = '""" + infection + "' and year = " + year + ")" +
                 infectionratestable.cases = results.getDouble("cases");
                 
                 infectionrates.add(infectionratestable);
+                 infectionrates.get(0).country = "Global Average";
+        return infectionrates;
 >>>>>>> 2218d3c61342223bb21960241a3dc4f5fe69ddda
+    }
+
+    // access query
+     public static ArrayList<redTableOne> getRedTableOne() {
+        // Create the ArrayList to return - this time of Movie objects
+        ArrayList<redTableOne> redTable = new ArrayList<>();
+   
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            try ( // Prepare a new SQL Query & Set a timeout
+                    Statement statement = connection.createStatement()) {
+                statement.setQueryTimeout(30);
+                // The Query
+
+                String query = "SELECT \r\n" + //
+                                        "    s.country,\r\n" + //
+                                        "    s.year AS \"Start Year\",\r\n" + //
+                                        "    e.year AS \"End Year\",\r\n" + //
+                                        "    s.anti,\r\n" + //
+                                        "    ROUND(e.vacRate - s.vacRate, 2) AS VacIncrease\r\n" + //
+                                        "FROM (\r\n" + //
+                                        "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
+                                        "    FROM vacRate\r\n" + //
+                                        "    WHERE year = 2000\r\n" + //
+                                        "    GROUP BY country, anti, year) s\r\n" + //
+                                        "JOIN (\r\n" + //
+                                        "    SELECT country, anti, year, AVG(vacRate) AS vacRate\r\n" + //
+                                        "    FROM vacRate\r\n" + //
+                                        "    WHERE year = 2018\r\n" + //
+                                        "    GROUP BY country, anti, year) e\r\n" + //
+                                        "  ON s.country = e.country\r\n" + //
+                                        "  AND LOWER(s.anti) = LOWER(e.anti)\r\n" + //
+                                        "WHERE LOWER(s.anti) = 'dtpcv1'\r\n" + //
+                                        "ORDER BY VacIncrease DESC\r\n" + //
+                                        "LIMIT 5;";
+                ResultSet results = statement.executeQuery(query);   
+
+                // Process all of the results
+                // The "results" variable is similar to an array
+                // We can iterate through all of the database query results
+                while (results.next()) {
+                    // Create a Movie Object
+                    redTableOne row = new redTableOne();
+                    
+                    // Lookup the columns we want, and set the movie object field
+                    // BUT, we must be careful of the column type!
+
+                    row.country = results.getString("country");
+                    row.startYear = results.getString("Start Year");
+                    row.endYear = results.getString("End Year");
+                    row.anti = results.getString("anti");
+                    row.vacincrease = results.getString("VacIncrease");
+                    // Add the movie object to the array
+                    redTable.add(row);
+                }
+                // Close the statement because we are done with it
+                statement.close();
             }
 
             // Close the statement because we are done with it
@@ -746,13 +745,9 @@ where description = '""" + infection + "' and year = " + year + ")" +
         }
 
         // Finally we return all of the movies
-<<<<<<< HEAD
         return redTable;
-=======
-        infectionrates.get(0).country = "Global Average";
-        return infectionrates;
->>>>>>> 2218d3c61342223bb21960241a3dc4f5fe69ddda
-    }
+
+       
 
     
 
