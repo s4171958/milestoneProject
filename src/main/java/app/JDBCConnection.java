@@ -276,15 +276,20 @@ public class JDBCConnection {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
-            String query = "SELECT inf_type \r\n" + //
-                                "    FROM infectiondata\r\n" + //
-                                "    WHERE year >= (SELECT MAX(year) - 4 FROM infectiondata)\r\n" + //
-                                "    GROUP BY inf_type\r\n" + //
-                                "    ORDER BY sum(cases) DESC\r\n" + //
-                                "    LIMIT 1;";
+            String query = "SELECT inft.description AS 'mostreporteddisease'\r\n" + //
+                                "FROM infectiondata infd\r\n" + //
+                                "JOIN infection_type inft\r\n" + //
+                                "    ON infd.inf_type = inft.id\r\n" + //
+                                "WHERE year >= (\r\n" + //
+                                "    SELECT MAX(year) - 4\r\n" + //
+                                "    FROM infectiondata)\r\n" + //
+                                "GROUP BY inf_type\r\n" + //
+                                "ORDER BY SUM(cases) DESC\r\n" + //
+                                "LIMIT 1;";
+                                
             ResultSet results = statement.executeQuery(query);
 
-            mostReportedDisease = results.getString("inf_type");
+            mostReportedDisease = results.getString("mostreporteddisease");
 
             statement.close();
         } catch (SQLException e) {
