@@ -75,3 +75,25 @@ img.top-image {
    max-width: 1000px;
    margin: auto;
    }
+
+  .main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px; /* space between left and right sides */
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+.section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-container {
+  width: 100%;
+  height: 400px; /* adjust to your actual table height */
+  background-color: #d9d9d9; /* placeholder */
+  border-radius: 6px;
+}
