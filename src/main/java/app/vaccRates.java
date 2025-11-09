@@ -33,16 +33,27 @@ public class vaccRates implements Handler {
         // year textbox
         String year = context.formParam("inf_year_numbox");
 
+        int numyear = -1;
+        
+        // in case numyear is empty
+        try {
+        if (year != null && !year.isEmpty()) {
+            numyear = Integer.parseInt(year);
+        }
+        } catch (NumberFormatException e) {
+            // leave numyear = -1 if parsing fails
+        }
+
         //prints table one
-        if (regionType_drop == null || ((year == null || year == "") && (year.compareTo("2024") >= 0) && (year.compareTo("2000") <= 0))) {
+        if (regionType_drop == null || numyear < 2000 || numyear > 2024) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
-            model.put("title_drop", new String("No Results to show for dropbox and/or textbox"));
+            model.put("title_drop", new String("Invalid input for dropbox and/or textbox"));
             ArrayList<String> empty = new ArrayList<>();
             model.put("region_drop", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop", new String(regionType_drop + " Statistics, Year: " + year));
+            model.put("title_drop", new String("Table 1: All countries in the year " + year + " in region " + regionType_drop + " reaching +90% of vaccine target"));
             ArrayList<countryAndRegion> orangeTableOne = JDBCConnection.getOrangeTableOne(regionType_drop, year);
            
             model.put("region_drop", orangeTableOne);
@@ -57,15 +68,26 @@ public class vaccRates implements Handler {
         //orangetabletwo year textbox
         String yearTwo = context.formParam("inf_year_numbox_two");
 
-        if (antigenType_drop == null) {
+        int numyearTwo = -1;
+
+        // in case numyear is empty
+        try {
+        if (yearTwo != null && !yearTwo.isEmpty()) {
+            numyearTwo = Integer.parseInt(yearTwo);
+        }
+        } catch (NumberFormatException e) {
+            // leave numyear = -1 if parsing fails
+        }
+
+        if (antigenType_drop == null || numyearTwo < 2000 || numyearTwo > 2024) {
             // If NULL, nothing to show, therefore we make some "no results" HTML
             // Also store empty array list for completness
-            model.put("title_drop_two", new String("No Results to show for dropbox and/or textbox"));
+            model.put("title_drop_two", new String("Invalid input for dropbox and/or textbox"));
             ArrayList<String> empty = new ArrayList<>();
             model.put("orangeTableTwo", empty);
         } else {
             // If NOT NULL, then lookup the movie by type!
-            model.put("title_drop_two", new String(antigenType_drop + " Statistics, Year: " + year));
+            model.put("title_drop_two", new String("Table 2:Countries that have made 90% of their " + antigenType_drop + " target, in Year, " + year));
             ArrayList<orangeTableTwo> orangeTableTwo = JDBCConnection.getOrangeTableTwo(yearTwo, antigenType_drop);
            
             model.put("orangeTableTwo", orangeTableTwo);
